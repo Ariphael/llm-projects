@@ -1,5 +1,14 @@
 import json, subprocess, os, requests
 
+WORKSPACE = os.path.realpath("workspace")
+
+def _resolve(filePath):
+  """Join under WORKSPACE, resolve, and verify containment. Returns abs path or None."""
+  candidate = os.path.realpath(os.path.join(WORKSPACE, filePath))
+  if candidate != WORKSPACE and not candidate.startswith(WORKSPACE + os.sep):
+    return None
+  return candidate
+
 def shell(command, timeout=60):
   LIMIT = 30_000
   TIMEOUT = min(timeout, 300)
@@ -19,39 +28,48 @@ def shell(command, timeout=60):
       "truncated": truncated
     })
   except subprocess.TimeoutExpired as e:
-    stdout, stderr = e.stdout, e.stderr
+    stdout, stderr = e.stdout or "", e.stderr or ""
     truncated = len(stdout) > LIMIT or len(stderr) > LIMIT
     stdout, stderr = stdout[:LIMIT], stderr[:LIMIT]
     return json.dumps({
-      "stdout": e.stdout,
-      "stderr": e.stderr,
-      "exitCode": 1,
+      "stdout": stdout,
+      "stderr": stderr,
+      "exitCode": -1,
       "timedOut": True,
       "truncated": truncated
     })
 
 def fileWrite(filePath, content, append=False):
+  path = _resolve(filePath)
+  if path == None:
+    return json.dumps({
+      "error": "Resolved path must stay under workspace/"
+    })
+
   try:
-    with open(f"workspace/${filePath}", "w" if append == False else "a", encoding="utf-8") as file:
+    with open(path, "w" if append == False else "a", encoding="utf-8") as file:
       bytesWritten = file.write(content)
       return json.dumps({
         "success": True,
-        "bytesWritten": bytesWritten,
+        "charsWritten": bytesWritten,
         "filePath": filePath
       })
   except OSError as e:
     return json.dumps({
-      "success": False,
-      "bytesWritten": 0,
-      "filePath": filePath,
-      "error": e.strerror
+      "error": str(e)
     })
 
 def fileRead(filePath, offset=0, limit=30_000):
+  path = _resolve(filePath)
+  if path == None:
+    return json.dumps({
+      "error": "Resolved path must stay under workspace/"
+    })
+
   CHUNK_SIZE = 1024
 
   try:
-    with open(f"workspace/${filePath}", "r", encoding="utf-8") as file:
+    with open(path, "r", encoding="utf-8") as file:
       if offset > 0:
         file.seek(offset, os.SEEK_SET)
 
@@ -62,25 +80,36 @@ def fileRead(filePath, offset=0, limit=30_000):
           content += chunk
           return json.dumps({
             "content": content,
-            "bytesReturned": len(content),
-            "nextOffset": len(content),
+            "charsReturned": len(content),
+            "nextOffset": offset + len(content),
             "eof": False
           })
         content += chunk
 
-      content = content.rstrip()
-
       return json.dumps({
         "content": content,
-        "bytesReturned": len(content),
-        "nextOffset": offset + limit,
+        "charsReturned": len(content),
+        "nextOffset": offset + len(content),
         "eof": True
       })
   except OSError as e:
     return json.dumps({
-      "error": e.strerror
+      "error": str(e)
     })
 
 def fetch(url, maxLength=5000, startIndex=0):
-  response = requests.get(url)
-  return response.content[startIndex:startIndex+maxLength]
+  try:
+    response = requests.get(url, timeout=10)
+    content = response.text[startIndex:startIndex + maxLength]
+    return json.dumps({
+      "content": content,
+      "url": url,
+      "charsReturned": len(content),
+      "nextIndex": startIndex + len(content),
+      "truncated": len(content) >= maxLength,
+      "statusCode": response.status_code
+    })
+  except requests.exceptions.RequestException as e:
+    return json.dumps({
+      "error": str(e)
+    })
