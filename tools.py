@@ -48,10 +48,10 @@ def fileWrite(filePath, content, append=False):
 
   try:
     with open(path, "w" if append == False else "a", encoding="utf-8") as file:
-      bytesWritten = file.write(content)
+      charsWritten = file.write(content)
       return json.dumps({
         "success": True,
-        "charsWritten": bytesWritten,
+        "charsWritten": charsWritten,
         "filePath": filePath
       })
   except OSError as e:
@@ -66,32 +66,22 @@ def fileRead(filePath, offset=0, limit=30_000):
       "error": "Resolved path must stay under workspace/"
     })
 
-  CHUNK_SIZE = 1024
-
   try:
-    with open(path, "r", encoding="utf-8") as file:
+    with open(path, "rb", encoding="utf-8") as file:
       if offset > 0:
         file.seek(offset, os.SEEK_SET)
 
-      content = ""
-      for chunk in iter(lambda: file.read(CHUNK_SIZE), ''):
-        if len(content) + CHUNK_SIZE > limit:
-          chunk = chunk[:limit - len(content)]
-          content += chunk
-          return json.dumps({
-            "content": content,
-            "charsReturned": len(content),
-            "nextOffset": offset + len(content),
-            "eof": False
-          })
-        content += chunk
+      raw = file.read(limit)
+      eof = len(file.read(1)) == 0
 
-      return json.dumps({
-        "content": content,
-        "charsReturned": len(content),
-        "nextOffset": offset + len(content),
-        "eof": True
-      })
+    text = raw.decode("utf-8", errors="replace")
+
+    return json.dumps({
+      "content": text,
+      "bytesReturned": len(raw),
+      "nextOffset": offset + len(raw),
+      "eof": eof
+    })
   except OSError as e:
     return json.dumps({
       "error": str(e)
