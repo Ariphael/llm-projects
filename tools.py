@@ -20,51 +20,51 @@ def shell(command, timeout=60):
     stdout, stderr = result.stdout, result.stderr
     truncated = len(stdout) > LIMIT or len(stderr) > LIMIT
     stdout, stderr = stdout[:LIMIT], stderr[:LIMIT]
-    return json.dumps({
+    return {
       "stdout": stdout,
       "stderr": stderr,
       "exitCode": result.returncode,
       "timedOut": False,
       "truncated": truncated
-    })
+    }
   except subprocess.TimeoutExpired as e:
     stdout, stderr = e.stdout or "", e.stderr or ""
     truncated = len(stdout) > LIMIT or len(stderr) > LIMIT
     stdout, stderr = stdout[:LIMIT], stderr[:LIMIT]
-    return json.dumps({
+    return {
       "stdout": stdout,
       "stderr": stderr,
       "exitCode": -1,
       "timedOut": True,
       "truncated": truncated
-    })
+    }
 
 def fileWrite(filePath, content, append=False):
   path = _resolve(filePath)
   if path == None:
-    return json.dumps({
+    return {
       "error": "Resolved path must stay under workspace/"
-    })
+    }
 
   try:
     with open(path, "w" if append == False else "a", encoding="utf-8") as file:
       charsWritten = file.write(content)
-      return json.dumps({
+      return {
         "success": True,
         "charsWritten": charsWritten,
         "filePath": filePath
-      })
+      }
   except OSError as e:
-    return json.dumps({
+    return {
       "error": str(e)
-    })
+    }
 
 def fileRead(filePath, offset=0, limit=30_000):
   path = _resolve(filePath)
   if path == None:
-    return json.dumps({
+    return {
       "error": "Resolved path must stay under workspace/"
-    })
+    }
 
   try:
     with open(path, "rb", encoding="utf-8") as file:
@@ -76,30 +76,30 @@ def fileRead(filePath, offset=0, limit=30_000):
 
     text = raw.decode("utf-8", errors="replace")
 
-    return json.dumps({
+    return {
       "content": text,
       "bytesReturned": len(raw),
       "nextOffset": offset + len(raw),
       "eof": eof
-    })
+    }
   except OSError as e:
-    return json.dumps({
+    return {
       "error": str(e)
-    })
+    }
 
 def fetch(url, maxLength=5000, startIndex=0):
   try:
     response = requests.get(url, timeout=10)
     content = response.text[startIndex:startIndex + maxLength]
-    return json.dumps({
+    return {
       "content": content,
       "url": url,
       "charsReturned": len(content),
       "nextIndex": startIndex + len(content),
       "truncated": len(content) >= maxLength,
       "statusCode": response.status_code
-    })
+    }
   except requests.exceptions.RequestException as e:
-    return json.dumps({
+    return {
       "error": str(e)
-    })
+    }
