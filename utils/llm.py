@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from prompts import systemPrompt
 from tools import shell, fileWrite, fileRead, fetch
 from validation import validateToolCallArgs
+from exceptions import LLMQueryRetryLimitExceeded
 
 load_dotenv()
 
@@ -13,24 +14,38 @@ model = os.getenv("MODEL")
 VALID_TOOL_NAMES = ["fileRead", "fileWrite", "shell", "fetch"]
 TOOL_CALLS_BLOCK_REGEX = r"\<tool_calls\>(.*)\<\/tool_calls\>"
 TOOL_CALL_REGEX = r"\<tool_call\>(.*?)\<\/tool_call\>"
+QUERY_LLM_MAX_RETRIES = 3
 
-def queryLLM(messages: list[dict[str: any]]):
-  response = requests.post(
-    url="https://openrouter.ai/api/v1/chat/completions",
-    headers={
-      "Authorization": f"Bearer {apiKey}",
-      "Content-Type": "application/json",
-    },
-    data=json.dumps({
-      "model": model,
-      "messages": messages,
-      "reasoning": {"enabled": True},
-      "stop": ["</tool_calls>"]
-    })
-  )
+def queryLLM(messages: list[dict[str, any]]):
+  attempt = 0
 
-  response = response.json()
-  return response["choices"][0]
+  while attempt < QUERY_LLM_MAX_RETRIES:
+    try:
+      response = requests.post(
+        url="https://openrouter.ai/api/v1/chat/completions",
+        headers={
+          "Authorization": f"Bearer {apiKey}",
+          "Content-Type": "application/json",
+        },
+        data=json.dumps({
+          "model": model,
+          "messages": messages,
+          "reasoning": {"enabled": True},
+          "stop": ["</tool_calls>"]
+        })
+      )
+
+      if not response.ok or 400 <= response.status_code <= 599:
+        print(f"LLM Query POST request failed. Received status {response.status_code}")
+        retries += 1
+        continue
+
+      response = response.json()
+      return response["choices"][0]
+    except requests.exceptions.RequestException as e:
+      print(f"LLM Query request failed: {e}")
+      raise e
+  raise LLMQueryRetryLimitExceeded(f"LLM Query retry limit (={QUERY_LLM_MAX_RETRIES}) exceeded")
 
 
 def parse(responseMsg: str):
@@ -58,8 +73,8 @@ def parse(responseMsg: str):
 
 def getToolResultStr(toolResults: list[str]):
   results = "<tool_results>\n"
-  for resIdx in range(len(toolResults)):
-    results += f"<tool_result id=\"{resIdx}\">{toolResults[resIdx]}</tool_result>\n"
+  for i, res in enumerate(toolResults):
+    results += f"<tool_result id=\"{i}\">{res}</tool_result>\n"
   return results + "</tool_results>"
 
 
@@ -118,12 +133,21 @@ def agentLoop(initialMsg: str):
       toolResults.append(res)
 
     # feed back results to llm
-    messages.append({ "role": "system", "content": getToolResultStr(toolResults) })
+    messages.append({
+      "role": "user",
+      "content": getToolResultStr([(json.dumps(result) for result in toolResults)])
+    })
     response = queryLLM(messages)
 
     # update messages list and toolCalls
     responseMsg = response["message"].get("content") or ""
     if response["finish_reason"] == "stop":
       responseMsg += "</tool_calls>"
-    messages.append({ "role": "assistant", "content": responseMsg })
+    messages.append({
+      "role": "assistant",
+      "content": responseMsg,
+      "reasoning_details": response["message"].get("reasoning_details")
+    })
     toolCalls = parse(responseMsg)
+
+  return messages[-1]
