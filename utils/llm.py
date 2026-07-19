@@ -2,18 +2,17 @@ import requests, json, os, re
 from dotenv import load_dotenv
 
 from prompts import systemPrompt
-from exceptions import EmptyToolCallBlockException
 from tools import shell, fileWrite, fileRead, fetch
+from validation import validateToolCallArgs
 
 load_dotenv()
 
 apiKey = os.getenv("OPENROUTER_KEY")
-
-EMPTY_TOOL_CALL_BLOCK_ERROR_MSG = "tool calls block must be non-empty"
+model = os.getenv("MODEL")
 
 VALID_TOOL_NAMES = ["fileRead", "fileWrite", "shell", "fetch"]
 TOOL_CALLS_BLOCK_REGEX = r"\<tool_calls\>(.*)\<\/tool_calls\>"
-TOOL_CALL_REGEX = r"\<tool_call\>(.*)\<\/tool_call\>"
+TOOL_CALL_REGEX = r"\<tool_call\>(.*?)\<\/tool_call\>"
 
 def queryLLM(messages: list[dict[str: any]]):
   response = requests.post(
@@ -23,7 +22,7 @@ def queryLLM(messages: list[dict[str: any]]):
       "Content-Type": "application/json",
     },
     data=json.dumps({
-      "model": "",
+      "model": model,
       "messages": messages,
       "reasoning": {"enabled": True},
       "stop": ["</tool_calls>"]
@@ -31,26 +30,28 @@ def queryLLM(messages: list[dict[str: any]]):
   )
 
   response = response.json()
-  return response["choices"][0]["message"]
+  return response["choices"][0]
 
 
 def parse(responseMsg: str):
-  if not re.search(TOOL_CALLS_BLOCK_REGEX, responseMsg) and \
-    responseMsg.endswith("</tool_calls>"):
+  if responseMsg.endswith("</tool_calls>"):
     return []
 
   parsedCalls = []
 
-  match = re.search(TOOL_CALLS_BLOCK_REGEX, responseMsg)
-  if match.groups() < 2:
-    raise []
+  match = re.search(TOOL_CALLS_BLOCK_REGEX, responseMsg, re.DOTALL)
+  if match is None:
+    return []
 
-  toolCalls = re.findall(TOOL_CALL_REGEX, match.group(1))
+  toolCalls = re.findall(TOOL_CALL_REGEX, match.group(1), re.DOTALL)
   for toolCall in toolCalls:
     try:
-      parsedCalls.append(json.loads(toolCall))
+      argsErrorMsg = validateToolCallArgs(json.loads(toolCall))
+      parsedCalls.append(
+        { "error": argsErrorMsg } if argsErrorMsg != None else json.loads(toolCall)
+      )
     except json.JSONDecodeError as e:
-      parsedCalls.append(json.loads("\{ \"jsonError\": " + f"\"{e}\"" + "\}"))
+      parsedCalls.append({ "jsonError": str(e) })
 
   return parsedCalls
 
@@ -66,12 +67,12 @@ def agentLoop(initialMsg: str):
   messages = []
 
   # first api call with system prompt
-  messages.append(
+  messages.extend([
     { "role": "system", "content": systemPrompt },
     { "role": "user", "content": initialMsg }
-  )
+  ])
   response = queryLLM(messages)
-  responseMsg = response.get("content") + "</tool_calls>"
+  responseMsg = response["message"].get("content") + "</tool_calls>"
   messages.append({
     "role": "assistant",
     "content": responseMsg,
@@ -88,7 +89,7 @@ def agentLoop(initialMsg: str):
         continue
       elif toolCall["name"] not in VALID_TOOL_NAMES:
         toolResults.append({
-          "error": f"Invalid tool name: {toolCall["name"]}\nTool name must be one of: {" ".join(VALID_TOOL_NAMES)}"
+          "error": f"Invalid tool name: {toolCall['name']}\nTool name must be one of: {' '.join(VALID_TOOL_NAMES)}"
         })
         continue
 
@@ -121,6 +122,8 @@ def agentLoop(initialMsg: str):
     response = queryLLM(messages)
 
     # update messages list and toolCalls
-    responseMsg = response.get("content") + "</tool_calls>"
-    messages.append({ "role": "assistant", "content": responseMsg})
+    responseMsg = response["message"].get("content") or ""
+    if response["finish_reason"] == "stop":
+      responseMsg += "</tool_calls>"
+    messages.append({ "role": "assistant", "content": responseMsg })
     toolCalls = parse(responseMsg)
