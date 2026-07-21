@@ -1,4 +1,4 @@
-from utils import llm
+from agent import llm
 
 def main():
   query = input("Enter your instructions for the coding agent: ")
