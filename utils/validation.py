@@ -1,5 +1,5 @@
-def validateToolCallArgs(toolCall) -> str:
-  ### Validate tool call arguments, return corresponding error string or None if no missing arguments ###
+def validateToolCallArgs(toolCall) -> str | None:
+  """Validate tool call arguments, return corresponding error string or None if no missing arguments"""
   if "arguments" not in toolCall or "name" not in toolCall:
     return "Missing \"arguments\" or \"name\" property. Each tool call must be a JSON object with \"name\" and \"arguments\""
 
@@ -22,6 +22,6 @@ def validateToolCallArgs(toolCall) -> str:
       if "url" not in arguments:
         return "Tool call \"fetch\" missing required argument \"url\""
     case _:
-      return f"Unknown tool {toolCall["name"]}. List of known tools: shell, fileWrite, fileRead, fetch"
+      return f"Unknown tool {toolCall['name']}. List of known tools: shell, fileWrite, fileRead, fetch"
 
   return None
