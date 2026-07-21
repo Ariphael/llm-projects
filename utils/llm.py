@@ -123,7 +123,7 @@ def agentLoop(initialMsg: str):
     "reasoning_details": response["message"].get("reasoning_details")
   })
 
-  print(f"REASONING: {response["message"].get("reasoning_details")}")
+  print(f"\nREASONING: {response["message"].get("reasoning_details")}")
   print(f"RESPONSE: {responseMsg}")
 
   toolCalls, iterations = parse(responseMsg), 0
@@ -173,6 +173,10 @@ def agentLoop(initialMsg: str):
 
       toolResults.append(res)
 
+    print("\nTOOL RESULTS")
+    for toolResult in toolResults:
+      print(toolResult)
+
     # feed back results to llm
     messages.append({
       "role": "user",
@@ -190,7 +194,7 @@ def agentLoop(initialMsg: str):
       "reasoning_details": response["message"].get("reasoning_details")
     })
 
-    print(f"REASONING: {response["message"].get("reasoning_details")}")
+    print(f"\nREASONING: {response["message"].get("reasoning_details")}")
     print(f"RESPONSE: {responseMsg}")
 
     toolCalls = parse(responseMsg)
