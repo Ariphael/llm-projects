@@ -67,7 +67,7 @@ def fileRead(filePath, offset=0, limit=30_000):
     }
 
   try:
-    with open(path, "rb", encoding="utf-8") as file:
+    with open(path, "rb") as file:
       if offset > 0:
         file.seek(offset, os.SEEK_SET)
 
