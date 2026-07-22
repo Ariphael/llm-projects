@@ -115,7 +115,7 @@ def agentLoop(initialMsg: str):
   ])
   response = queryLLM(messages)
   responseMsg = response["message"].get("content") or ""
-  if response["finish_reason"] == "stop":
+  if responseMsg.find("<tool_calls>") != -1:
     responseMsg += "</tool_calls>"
   messages.append({
     "role": "assistant",
@@ -186,7 +186,7 @@ def agentLoop(initialMsg: str):
 
     # update messages list and toolCalls
     responseMsg = response["message"].get("content") or ""
-    if response["finish_reason"] == "stop":
+    if responseMsg.find("<tool_calls>") != -1:
       responseMsg += "</tool_calls>"
     messages.append({
       "role": "assistant",
