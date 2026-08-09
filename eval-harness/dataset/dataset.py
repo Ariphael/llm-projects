@@ -14,20 +14,22 @@ class StudentState(TypedDict):
 class Input(TypedDict):
   response_type: str
   topic: str
-  difficulty: str
   conversation: list
   studentState: StudentState
 
+# INVARIANT: student_state counts the turn the model is responding to, instead of the state before it
+
 SCENARIOS = {
   "hint": [
-    { "name": "first_hint", "state": { "attempts": 0, "hints_used": 1 }},
-    { "name": "hint_after_attempt", "state": { "attempts": 1, "hints_used": 1 }}
+    { "name": "first_hint", "state": { "attempts": 0, "hints_used": 0 }},
+    { "name": "hint_after_attempt", "state": { "attempts": 1, "hints_used": 0 }},
+    { "name": "multiple_hints", "state": { "attempts": 0, "hints_used": 2 }}
   ],
   "answer": [
-    { "name": "wrong_answer_no_hints", "state": { "attempts": 1, "hints_used": 0 }},
-    { "name": "right_answer_no_hints", "state": { "attempts": 1, "hints_used": 0 }},
-    { "name": "answer_after_one_hint", "state": { "attempts": 1, "hints_used": 1 }},
-    { "name": "answer_after_many_attempts", "state": { "attempts": 3, "hints_used": 0 }}
+    { "name": "wrong_no_hints", "state": { "attempts": 1, "hints_used": 0 }},
+    { "name": "right_no_hints", "state": { "attempts": 1, "hints_used": 0 }},
+    { "name": "after_one_hint", "state": { "attempts": 1, "hints_used": 1 }},
+    { "name": "after_many_attempts", "state": { "attempts": 3, "hints_used": 0 }}
   ],
   "start": [
     { "name": "start", "state": { "attempts": 0, "hints_used": 0 }}
@@ -37,25 +39,63 @@ SCENARIOS = {
   ]
 }
 
+ALL_SEEDS = [
+  "percentages",
+  "ratios",
+  "probability",
+  "algebraic",
+  "linear",
+  "exponents_and_square_roots",
+  "inequalities",
+  "simultaneous",
+  "trigonometry",
+  "quadratics"
+]
+
+ASSIGNMENTS = {
+  ("start", "start"): ALL_SEEDS,
+  ("skip", "skip"): ALL_SEEDS,
+  ("hint", "first_hint"): ["quadratics", "linear", "inequalities", "ratios"],
+  ("hint", "hint_after_attempt"): ["algebraic", "simultaneous", "percentages"],
+  ("hint", "multiple_hints"): ["quadratics", "linear", "algebraic"],
+  ("answer", "wrong_no_hints"): ["quadratics", "simultaneous", "inequalities"],
+  ("answer", "right_no_hints"): ["ratios", "percentages"],
+  ("answer", "after_one_hint"): ["linear", "algebraic"],
+  ("answer", "after_many_attempts"): ["simultaneous", "quadratics"],
+}
+
 def generateInputs(seeds: list[Seed]):
-  """Creates file inputs.json containing inputs with conversation left empty. Pairs seed problems with applicable scenarios and derives student_state deterministically."""
-  with open('inputs.json', 'w', encoding='utf-8') as file:
-    for seed in seeds:
-      # for all seed topics, start, answer, hint and skip applicable
-      # degenerate cases where hint does not apply: percentages, probability_basics
+  """Creates file inputs.json containing inputs with conversation left for the user to fill. Pairs seed problems with applicable scenarios and derives student_state deterministically."""
 
-      # 'answer' scenarios':
-      # 1) student submits wrong answer -> studentState: { attempts: 1, hints_used: 0 }
-      # 2) student submits right answer -> studentState: same as above
-      # 3) stuents submits answer after hint request -> studentState: { attempts: 1, hints_used: 1 }
-      # 4) student submits answer after multiple attempts -> studentState: { attempts: 3, hints_used: 0 }
+  # for all seed topics, start, answer, hint and skip applicable
+  # degenerate cases where hint does not apply: percentages, probability_basics
 
-      # 'start' scenario:
-      # 1) new problem -> studentState: { attempts: 0, hints_used: 0 }
+  seedMap = {}
+  for seed in seeds:
+    seedMap[seed["topic"]] = seed
 
-      # 'hint' scenarios:
-      # 1) student requests hint -> studentState: { attempts: 0, hints_used: 1 }
-      # 2) student requests hint after some attempts -> studentState: { attempts: 1, hints_used: 1 }
+  data = { "inputs": [] }
 
-      # 'skip' scenario:
-      # 1) student skips question -> studentState: { attempts: 0, hints_used: 0 }
+  for (type, scenarioName), assignments in ASSIGNMENTS.items():
+    for seed in assignments:
+      studentState = {}
+      for scenario in SCENARIOS[type]:
+        if scenario["name"] == scenarioName:
+          studentState = scenario["state"]
+
+      input: Input = {
+        "response_type": type,
+        "topic": seed,
+        "conversation": [{ "role": "tutor", "content": seedMap[seed]["problem_text"] }],
+        "studentState": studentState
+      }
+      data["inputs"].append(input)
+
+  with open("inputs.json", "w", encoding="utf-8") as file:
+    json.dump(data, file, indent=2)
+
+# ADVERSARIAL FUNCTIONS
+
+if __name__ == "__main__":
+  with open("seeds.json", "r", encoding="utf-8") as file:
+    generateInputs(json.load(file)["seeds"])
