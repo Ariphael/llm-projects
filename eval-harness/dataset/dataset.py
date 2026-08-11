@@ -1,6 +1,11 @@
-import json
+import json, os
 
 from typing import TypedDict
+from dotenv import load_dotenv
+
+load_dotenv()
+
+apiKey = os.getenv("OPENROUTER_KEY")
 
 class Seed(TypedDict):
   topic: str
@@ -21,11 +26,16 @@ class Input(TypedDict):
 
 DATASET_MODEL = "moonshotai/kimi-k3"
 
+
+# second_hint:
+# llm provides hint (handwritten)
+# student requests another hint with query about prev hint (llm-generated)
+
 SCENARIOS = {
   "hint": [
     { "name": "first_hint", "state": { "attempts": 0, "hints_used": 0 }},
     { "name": "hint_after_attempt", "state": { "attempts": 1, "hints_used": 0 }},
-    { "name": "multiple_hints", "state": { "attempts": 0, "hints_used": 2 }}
+    { "name": "second_hint", "state": { "attempts": 0, "hints_used": 1 }}
   ],
   "answer": [
     { "name": "wrong_no_hints", "state": { "attempts": 1, "hints_used": 0 }},
@@ -84,6 +94,7 @@ def generateInputs(seeds: list[Seed]):
       for scenario in SCENARIOS[rtype]:
         if scenario["name"] == scenarioName:
           studentState = scenario["state"]
+          break
 
       if not studentState:
         raise KeyError(f"Invalid scenario name: {scenarioName}")
@@ -110,6 +121,14 @@ def generateInputs(seeds: list[Seed]):
     json.dump(data, file, indent=2)
 
 # ADVERSARIAL FUNCTIONS
+
+
+def fillConversationHelper(conversation: list[dict], seed: Seed, rtype: str, scenario: dict):
+  attempts, hintsUsed = scenario["state"]["attempts"], scenario["state"]["hints_used"]
+
+  if rtype == "hint":
+
+
 
 if __name__ == "__main__":
   with open("seeds.json", "r", encoding="utf-8") as file:
