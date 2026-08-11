@@ -19,6 +19,8 @@ class Input(TypedDict):
 
 # INVARIANT: student_state counts the turn the model is responding to, instead of the state before it
 
+DATASET_MODEL = "moonshotai/kimi-k3"
+
 SCENARIOS = {
   "hint": [
     { "name": "first_hint", "state": { "attempts": 0, "hints_used": 0 }},
@@ -76,20 +78,33 @@ def generateInputs(seeds: list[Seed]):
 
   data = { "inputs": [] }
 
-  for (type, scenarioName), assignments in ASSIGNMENTS.items():
+  for (rtype, scenarioName), assignments in ASSIGNMENTS.items():
     for seed in assignments:
       studentState = {}
-      for scenario in SCENARIOS[type]:
+      for scenario in SCENARIOS[rtype]:
         if scenario["name"] == scenarioName:
           studentState = scenario["state"]
 
-      input: Input = {
-        "response_type": type,
+      if not studentState:
+        raise KeyError(f"Invalid scenario name: {scenarioName}")
+
+      conversation = [{ "role": "tutor", "content": seedMap[seed]["problem_text"] }]
+      if rtype == "skip":
+        conversation.append({ "role": "student", "content": "[ skip question ]"})
+
+      for _ in range(scenario["state"]["attempts"]):
+        conversation.append({ "role": "student", "content": None})
+
+      itemId = f"{rtype}-{seed}-{scenarioName}"
+
+      item: Input = {
+        "item_id": itemId,
+        "response_type": rtype,
         "topic": seed,
-        "conversation": [{ "role": "tutor", "content": seedMap[seed]["problem_text"] }],
+        "conversation": conversation,
         "studentState": studentState
       }
-      data["inputs"].append(input)
+      data["inputs"].append(item)
 
   with open("inputs.json", "w", encoding="utf-8") as file:
     json.dump(data, file, indent=2)
