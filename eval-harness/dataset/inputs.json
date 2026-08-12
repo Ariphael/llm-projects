@@ -10,7 +10,7 @@
           "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -25,7 +25,7 @@
           "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -40,7 +40,7 @@
           "content": "A bag has 5 red marbles, 3 blue marbles, and 2 green marbles. If you close your eyes and pick one marble out of the bag, what is the probability that you will pick a blue marble? Write your answer as a fraction."
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -55,7 +55,7 @@
           "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -70,7 +70,7 @@
           "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -85,7 +85,7 @@
           "content": "Find the value of the following expression:\\(2^{3}+\\sqrt{25}\\)"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -100,7 +100,7 @@
           "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -115,7 +115,7 @@
           "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -130,7 +130,7 @@
           "content": "A vertical flagpole stands on top of a hill. The hill itself forms a perfect \\(15^{\\circ }\\) angle with the flat, horizontal ground. At a specific time of day, the sun hits the flagpole, casting a shadow straight down the slope of the hill. The length of this shadow along the hill's slope is exactly 20 meters. At that exact same moment, the angle of elevation from the horizontal at the very tip of the shadow looking up to the top of the flagpole is \\(45^{\\circ }\\). Find the height of the flagpole rounded to 2 decimal places."
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -145,7 +145,7 @@
           "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -164,7 +164,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -183,7 +183,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -202,7 +202,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -221,7 +221,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -240,7 +240,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -259,7 +259,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -278,7 +278,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -297,7 +297,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -316,7 +316,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -335,7 +335,7 @@
           "content": "[ skip question ]"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -354,7 +354,7 @@
           "content": "i have no idea where to start"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -373,7 +373,7 @@
           "content": "where do i start?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -392,7 +392,7 @@
           "content": "I don't understand the question"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -411,7 +411,7 @@
           "content": "I'm stuck. Do I plus or multiply to solve this?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 0
       }
@@ -438,7 +438,7 @@
           "content": "how do i approach this?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       }
@@ -465,7 +465,7 @@
           "content": "How do I solve this?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       }
@@ -492,7 +492,7 @@
           "content": "help im stuck"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       }
@@ -519,7 +519,7 @@
           "content": "wait why do they have to add to -5? i dont get where the adding part comes from"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 1
       }
@@ -546,7 +546,7 @@
           "content": "wait does -2(x-3) become -2x-6 or -2x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 1
       }
@@ -573,7 +573,7 @@
           "content": "wait so do i multiply the -2 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 0,
         "hints_used": 1
       }
@@ -592,7 +592,7 @@
           "content": "x = -3, x = -2"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       },
@@ -612,7 +612,7 @@
           "content": "17.15 per large box, 3.08 per small box"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       },
@@ -632,7 +632,7 @@
           "content": "c=3 ?"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       },
@@ -652,7 +652,7 @@
           "content": "6"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       },
@@ -672,7 +672,7 @@
           "content": "$4.08"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 0
       },
@@ -700,7 +700,7 @@
           "content": "So: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means x = 4"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 1
       },
@@ -728,7 +728,7 @@
           "content": "OK. -2(a+b) = -2a - 2b\nso 4a+3b-2a-2b=2a+b\nso 2*12 + 9 = 33"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 1,
         "hints_used": 1
       },
@@ -764,7 +764,7 @@
           "content": "oops i didnt read the part abt the 2 samll boxes being empty properly. ok so it's: 16 per large box, 5 per small box"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 3,
         "hints_used": 0
       },
@@ -800,7 +800,7 @@
           "content": "x=3,x=2"
         }
       ],
-      "studentState": {
+      "student_state": {
         "attempts": 3,
         "hints_used": 0
       },
