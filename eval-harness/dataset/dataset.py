@@ -17,6 +17,13 @@ class Input(TypedDict):
   conversation: list
   studentState: StudentState
 
+class AnswerInput(TypedDict):
+  response_type: str
+  topic: str
+  conversation: list
+  studentState: StudentState
+  student_answer_correct: bool|None
+
 # INVARIANT: student_state counts the turn the model is responding to, instead of the state before it
 
 SCENARIOS = {
@@ -57,7 +64,7 @@ ASSIGNMENTS = {
   ("skip", "skip"): ALL_SEEDS,
   ("hint", "first_hint"): ["quadratics", "linear", "inequalities", "ratios"],
   ("hint", "hint_after_attempt"): ["algebraic", "simultaneous", "percentages"],
-  ("hint", "multiple_hints"): ["quadratics", "linear", "algebraic"],
+  ("hint", "second_hint"): ["quadratics", "linear", "algebraic"],
   ("answer", "wrong_no_hints"): ["quadratics", "simultaneous", "inequalities"],
   ("answer", "right_no_hints"): ["ratios", "percentages"],
   ("answer", "after_one_hint"): ["linear", "algebraic"],
@@ -96,12 +103,24 @@ def generateInputs(seeds: list[Seed]):
 
       itemId = f"{rtype}-{seed}-{scenarioName}"
 
+      if rtype == "answer":
+        item: AnswerInput = {
+          "item_id": itemId,
+          "response_type": rtype,
+          "topic": seed,
+          "conversation": conversation,
+          "studentState": studentState,
+          "student_answer_correct": None
+        }
+        data["inputs"].append(item)
+        continue
+
       item: Input = {
         "item_id": itemId,
         "response_type": rtype,
         "topic": seed,
         "conversation": conversation,
-        "studentState": studentState
+        "studentState": studentState,
       }
       data["inputs"].append(item)
 
