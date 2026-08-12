@@ -1,11 +1,6 @@
-import json, os
+import json
 
 from typing import TypedDict
-from dotenv import load_dotenv
-
-load_dotenv()
-
-apiKey = os.getenv("OPENROUTER_KEY")
 
 class Seed(TypedDict):
   topic: str
@@ -23,13 +18,6 @@ class Input(TypedDict):
   studentState: StudentState
 
 # INVARIANT: student_state counts the turn the model is responding to, instead of the state before it
-
-DATASET_MODEL = "moonshotai/kimi-k3"
-
-
-# second_hint:
-# llm provides hint (handwritten)
-# student requests another hint with query about prev hint (llm-generated)
 
 SCENARIOS = {
   "hint": [
@@ -121,14 +109,6 @@ def generateInputs(seeds: list[Seed]):
     json.dump(data, file, indent=2)
 
 # ADVERSARIAL FUNCTIONS
-
-
-def fillConversationHelper(conversation: list[dict], seed: Seed, rtype: str, scenario: dict):
-  attempts, hintsUsed = scenario["state"]["attempts"], scenario["state"]["hints_used"]
-
-  if rtype == "hint":
-
-
 
 if __name__ == "__main__":
   with open("seeds.json", "r", encoding="utf-8") as file:
