@@ -109,7 +109,7 @@ def generateInputs(seeds: list[Seed]):
           "response_type": rtype,
           "topic": seed,
           "conversation": conversation,
-          "studentState": studentState,
+          "student_state": studentState,
           "student_answer_correct": None
         }
         data["inputs"].append(item)
@@ -120,7 +120,7 @@ def generateInputs(seeds: list[Seed]):
         "response_type": rtype,
         "topic": seed,
         "conversation": conversation,
-        "studentState": studentState,
+        "student_state": studentState,
       }
       data["inputs"].append(item)
 
