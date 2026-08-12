@@ -1,8 +1,14 @@
 import os, sys
 
-from ..model.llm import queryLLM
+from pathlib import Path
 from dotenv import load_dotenv
 from prompts import generateStudentInquiryPrompt
+
+rootDir = Path(__file__).resolve().parent.parent
+sys.path.append(str(rootDir))
+
+from model.llm import queryLLM
+
 
 load_dotenv()
 

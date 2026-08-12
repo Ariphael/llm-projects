@@ -1,6 +1,6 @@
 import requests, json, os, time
 
-from exceptions import LLMQueryRetryLimitExceeded, LLMQueryClientError
+from .exceptions import LLMQueryRetryLimitExceeded, LLMQueryClientError
 from dotenv import load_dotenv
 
 load_dotenv()
