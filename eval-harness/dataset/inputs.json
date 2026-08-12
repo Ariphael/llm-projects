@@ -1,0 +1,810 @@
+{
+  "inputs": [
+    {
+      "item_id": "start-percentages-start",
+      "response_type": "start",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-ratios-start",
+      "response_type": "start",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-probability-start",
+      "response_type": "start",
+      "topic": "probability",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A bag has 5 red marbles, 3 blue marbles, and 2 green marbles. If you close your eyes and pick one marble out of the bag, what is the probability that you will pick a blue marble? Write your answer as a fraction."
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-algebraic-start",
+      "response_type": "start",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-linear-start",
+      "response_type": "start",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-exponents_and_square_roots-start",
+      "response_type": "start",
+      "topic": "exponents_and_square_roots",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Find the value of the following expression:\\(2^{3}+\\sqrt{25}\\)"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-inequalities-start",
+      "response_type": "start",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-simultaneous-start",
+      "response_type": "start",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-trigonometry-start",
+      "response_type": "start",
+      "topic": "trigonometry",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A vertical flagpole stands on top of a hill. The hill itself forms a perfect \\(15^{\\circ }\\) angle with the flat, horizontal ground. At a specific time of day, the sun hits the flagpole, casting a shadow straight down the slope of the hill. The length of this shadow along the hill's slope is exactly 20 meters. At that exact same moment, the angle of elevation from the horizontal at the very tip of the shadow looking up to the top of the flagpole is \\(45^{\\circ }\\). Find the height of the flagpole rounded to 2 decimal places."
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "start-quadratics-start",
+      "response_type": "start",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-percentages-skip",
+      "response_type": "skip",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-ratios-skip",
+      "response_type": "skip",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-probability-skip",
+      "response_type": "skip",
+      "topic": "probability",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A bag has 5 red marbles, 3 blue marbles, and 2 green marbles. If you close your eyes and pick one marble out of the bag, what is the probability that you will pick a blue marble? Write your answer as a fraction."
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-algebraic-skip",
+      "response_type": "skip",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-linear-skip",
+      "response_type": "skip",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-exponents_and_square_roots-skip",
+      "response_type": "skip",
+      "topic": "exponents_and_square_roots",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Find the value of the following expression:\\(2^{3}+\\sqrt{25}\\)"
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-inequalities-skip",
+      "response_type": "skip",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-simultaneous-skip",
+      "response_type": "skip",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-trigonometry-skip",
+      "response_type": "skip",
+      "topic": "trigonometry",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A vertical flagpole stands on top of a hill. The hill itself forms a perfect \\(15^{\\circ }\\) angle with the flat, horizontal ground. At a specific time of day, the sun hits the flagpole, casting a shadow straight down the slope of the hill. The length of this shadow along the hill's slope is exactly 20 meters. At that exact same moment, the angle of elevation from the horizontal at the very tip of the shadow looking up to the top of the flagpole is \\(45^{\\circ }\\). Find the height of the flagpole rounded to 2 decimal places."
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "skip-quadratics-skip",
+      "response_type": "skip",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "student",
+          "content": "[ skip question ]"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-quadratics-first_hint",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "student",
+          "content": "i have no idea where to start"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-linear-first_hint",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "student",
+          "content": "where do i start?"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-inequalities-first_hint",
+      "response_type": "hint",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "student",
+          "content": "I don't understand the question"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-ratios-first_hint",
+      "response_type": "hint",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "student",
+          "content": "I'm stuck. Do I plus or multiply to solve this?"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-algebraic-hint_after_attempt",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "student",
+          "content": "1533"
+        },
+        {
+          "role": "tutor",
+          "content": "Your answer is not quite correct. Try again"
+        },
+        {
+          "role": "student",
+          "content": "how do i approach this?"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-simultaneous-hint_after_attempt",
+      "response_type": "hint",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "student",
+          "content": "17.15 per large box and 3.08 per small box"
+        },
+        {
+          "role": "tutor",
+          "content": "Your answer is incorrect. Try again"
+        },
+        {
+          "role": "student",
+          "content": "How do I solve this?"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-percentages-hint_after_attempt",
+      "response_type": "hint",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "student",
+          "content": "$2.72"
+        },
+        {
+          "role": "tutor",
+          "content": "Your answer is not quite correct. Read the question and then try again"
+        },
+        {
+          "role": "student",
+          "content": "help im stuck"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-quadratics-second_hint",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "student",
+          "content": "I would like a hint"
+        },
+        {
+          "role": "tutor",
+          "content": "Consider the rule for factorising quadratic equations. What two numbers add to -5, and multiply to 6?"
+        },
+        {
+          "role": "student",
+          "content": "wait why do they have to add to -5? i dont get where the adding part comes from"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-linear-second_hint",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "student",
+          "content": "i need some help. How do i get x on one side without making sign errors?"
+        },
+        {
+          "role": "tutor",
+          "content": "Try expanding the brackets that are multiplied by -2 and 3 first. What do you notice about the equation after this?"
+        },
+        {
+          "role": "student",
+          "content": "wait does -2(x-3) become -2x-6 or -2x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-algebraic-second_hint",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "student",
+          "content": "i'm stuck where do I begin?"
+        },
+        {
+          "role": "tutor",
+          "content": "The expression has a bracket multiplied by -2 - what has to happen to that bracket before you can combine anything?"
+        },
+        {
+          "role": "student",
+          "content": "wait so do i multiply the -2 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
+        }
+      ],
+      "studentState": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "answer-quadratics-wrong_no_hints",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "student",
+          "content": "x = -3, x = -2"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-simultaneous-wrong_no_hints",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "student",
+          "content": "17.15 per large box, 3.08 per small box"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-inequalities-wrong_no_hints",
+      "response_type": "answer",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "student",
+          "content": "c=3 ?"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-ratios-right_no_hints",
+      "response_type": "answer",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "student",
+          "content": "6"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-percentages-right_no_hints",
+      "response_type": "answer",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "student",
+          "content": "$4.08"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-linear-after_one_hint",
+      "response_type": "answer",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "student",
+          "content": "How do i start?"
+        },
+        {
+          "role": "tutor",
+          "content": "Start by expanding the brackets that are multiplied by -2 and 3"
+        },
+        {
+          "role": "student",
+          "content": "So: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means x = 4"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-algebraic-after_one_hint",
+      "response_type": "answer",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "student",
+          "content": "im confused. where do i start?"
+        },
+        {
+          "role": "tutor",
+          "content": "Try expanding the bracket multiplied by -2 first"
+        },
+        {
+          "role": "student",
+          "content": "OK. -2(a+b) = -2a - 2b\nso 4a+3b-2a-2b=2a+b\nso 2*12 + 9 = 33"
+        }
+      ],
+      "studentState": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-simultaneous-after_many_attempts",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "student",
+          "content": "Is it 17.15 per large box, 3.08 per small box?"
+        },
+        {
+          "role": "tutor",
+          "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again"
+        },
+        {
+          "role": "student",
+          "content": "so is it 17 per large box and 3 per small box?"
+        },
+        {
+          "role": "tutor",
+          "content": "That is incorrect. Re-read the question and try again"
+        },
+        {
+          "role": "student",
+          "content": "oops i didnt read the part abt the 2 samll boxes being empty properly. ok so it's: 16 per large box, 5 per small box"
+        }
+      ],
+      "studentState": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-quadratics-after_many_attempts",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "tutor",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "student",
+          "content": "x=5, x=1"
+        },
+        {
+          "role": "tutor",
+          "content": "Incorrect. Try again"
+        },
+        {
+          "role": "student",
+          "content": "x=-3, x=-2"
+        },
+        {
+          "role": "tutor",
+          "content": "Close but not quite. You can request a hint if you're stuck. Try again"
+        },
+        {
+          "role": "student",
+          "content": "x=3,x=2"
+        }
+      ],
+      "studentState": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    }
+  ]
+}
