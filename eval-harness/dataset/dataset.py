@@ -1,6 +1,16 @@
-import json
+import json, random, sys, os
 
+from pathlib import Path
 from typing import TypedDict
+from dotenv import load_dotenv
+
+rootDir = Path(__file__).resolve().parent.parent
+sys.path.append(str(rootDir))
+
+from model.llm import queryLLM
+from prompts import generateMutateAnswerPrompt
+
+load_dotenv()
 
 class Seed(TypedDict):
   topic: str
@@ -25,6 +35,8 @@ class AnswerInput(TypedDict):
   student_answer_correct: bool|None
 
 # INVARIANT: student_state counts the turn the model is responding to, instead of the state before it
+
+DATASET_MODEL = os.getenv("DATASET_MODEL")
 
 SCENARIOS = {
   "hint": [
@@ -58,6 +70,8 @@ ALL_SEEDS = [
   "trigonometry",
   "quadratics"
 ]
+
+ALL_RTYPES = ["start", "skip", "hint", "answer"]
 
 ASSIGNMENTS = {
   ("start", "start"): ALL_SEEDS,
@@ -127,7 +141,66 @@ def generateInputs(seeds: list[Seed]):
   with open("inputs.json", "w", encoding="utf-8") as file:
     json.dump(data, file, indent=2)
 
+def generateProbes(seeds: list[Seed]):
+  data = { "probes": [] }
+
+  for topic, problemText, knownAnswer in seeds:
+    for rtype in ALL_RTYPES:
+      itemId = f"{rtype}-{topic}"
+      if rtype == "start":
+        data["probes"].append({
+          "item_id": itemId,
+          "response_type": rtype,
+          "topic": topic,
+          "converation": [],
+          "student_state": { "attempts": 0, "hints_used": 0 }
+        })
+      elif rtype == "hint":
+        data["probes"].append({
+          "item_id": itemId,
+          "response_type": rtype,
+          "topic": topic,
+          "conversation": [
+            { "role": "tutor", "content": problemText },
+            { "role": "student", "content": "i need a hint" }
+          ],
+          "student_state": { "attempts": 0, "hints_used": 0 }
+        })
+      elif rtype == "skip":
+        data["probes"].append({
+          "item_id": itemId,
+          "response_type": rtype,
+          "topic": topic,
+          "conversation": [
+            { "role": "tutor", "content": problemText },
+            { "role": "student", "content": "[ skip question ]" }
+          ],
+          "student_state": { "attempts": 0, "hints_used": 0 }
+        })
+      elif rtype == "answer":
+        isCorrect = random.choice([True, False])
+        answer = knownAnswer if isCorrect else mutateAnswerHelper(knownAnswer)
+        data["probes"].append({
+          "item_id": itemId,
+          "response_type": rtype,
+          "topic": topic,
+          "conversation": [
+            { "role": "tutor", "content": problemText },
+            { "role": "student", "content": answer}
+          ],
+          "student_state": { "attempts": 1, "hints_used": 0 }
+        })
+
+  # Apply perturbations
+
+
 # ADVERSARIAL FUNCTIONS
+
+def mutateAnswerHelper(answer: str):
+  return queryLLM(
+    DATASET_MODEL,
+    [{ "role": "system", "message": generateMutateAnswerPrompt(answer) }]
+  )
 
 if __name__ == "__main__":
   with open("seeds.json", "r", encoding="utf-8") as file:
