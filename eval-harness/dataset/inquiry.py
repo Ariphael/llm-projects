@@ -9,7 +9,6 @@ sys.path.append(str(rootDir))
 
 from model.llm import queryLLM
 
-
 load_dotenv()
 
 DATASET_MODEL = os.getenv("DATASET_MODEL")
