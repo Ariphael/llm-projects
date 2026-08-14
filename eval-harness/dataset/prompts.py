@@ -16,6 +16,17 @@ def generateStudentInquiryPrompt(problemText: str, priorHint: str):
     'Respond with JSON only: {"content": "<the student message>"}'
   )
 
+def generateMutateAnswerPrompt(correctAnswer: str):
+  return (
+    "You will be given a correct answer to a math problem a student might provide, without working. You will not "
+    "be given the original problem.\n"
+    "Your job is to simply mutate the answer so that it is incorrect by either changing the numbers by a random amount "
+    "or flipping the signs. Maintain the structure of the original answer (e.g., if answer is \"x=3,x=2\", then the mutated answer you "
+    "return must be in the format \"x=[num1],x=[num2]\". if answer is \"33\", then the mutated answer your return must be a single number.\n"
+    "The mutated answer must the only thing in your response. No preamble/chain-of-thought, no markdown, no newlines, no quotes."
+    "\n\n"
+    f"The given correct answer is: {correctAnswer}"
+  )
 
 
 # def generateConversationSystemPrompt(seed: Seed, scenario: dict):
