@@ -4,12 +4,7 @@
       "item_id": "start-percentages-start",
       "response_type": "start",
       "topic": "percentages",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -19,12 +14,7 @@
       "item_id": "start-ratios-start",
       "response_type": "start",
       "topic": "ratios",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -34,12 +24,7 @@
       "item_id": "start-probability-start",
       "response_type": "start",
       "topic": "probability",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "A bag has 5 red marbles, 3 blue marbles, and 2 green marbles. If you close your eyes and pick one marble out of the bag, what is the probability that you will pick a blue marble? Write your answer as a fraction."
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -49,12 +34,7 @@
       "item_id": "start-algebraic-start",
       "response_type": "start",
       "topic": "algebraic",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -64,12 +44,7 @@
       "item_id": "start-linear-start",
       "response_type": "start",
       "topic": "linear",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -79,12 +54,7 @@
       "item_id": "start-exponents_and_square_roots-start",
       "response_type": "start",
       "topic": "exponents_and_square_roots",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "Find the value of the following expression:\\(2^{3}+\\sqrt{25}\\)"
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -94,12 +64,7 @@
       "item_id": "start-inequalities-start",
       "response_type": "start",
       "topic": "inequalities",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -109,12 +74,7 @@
       "item_id": "start-simultaneous-start",
       "response_type": "start",
       "topic": "simultaneous",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -124,12 +84,7 @@
       "item_id": "start-trigonometry-start",
       "response_type": "start",
       "topic": "trigonometry",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "A vertical flagpole stands on top of a hill. The hill itself forms a perfect \\(15^{\\circ }\\) angle with the flat, horizontal ground. At a specific time of day, the sun hits the flagpole, casting a shadow straight down the slope of the hill. The length of this shadow along the hill's slope is exactly 20 meters. At that exact same moment, the angle of elevation from the horizontal at the very tip of the shadow looking up to the top of the flagpole is \\(45^{\\circ }\\). Find the height of the flagpole rounded to 2 decimal places."
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
@@ -139,12 +94,7 @@
       "item_id": "start-quadratics-start",
       "response_type": "start",
       "topic": "quadratics",
-      "conversation": [
-        {
-          "role": "tutor",
-          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
-        }
-      ],
+      "conversation": [],
       "student_state": {
         "attempts": 0,
         "hints_used": 0
