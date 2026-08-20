@@ -1,4 +1,4 @@
-import json, random, sys, os
+import json, random, sys, os, copy, re
 
 from pathlib import Path
 from typing import TypedDict
@@ -84,6 +84,11 @@ ASSIGNMENTS = {
   ("answer", "after_one_hint"): ["linear", "algebraic"],
   ("answer", "after_many_attempts"): ["simultaneous", "quadratics"],
 }
+
+ARITHMETIC_REGEX = r"[a-zA-Z0-9_().\s]+[+\-*/=][a-zA-Z0-9_().\s]*=[a-zA-Z0-9_().\s]+"
+MATH_UNIT_REGEX = r"(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])|[-+*/^()])"
+MATH_SIDE_REGEX = rf"{MATH_UNIT_REGEX}(?:\s*{MATH_UNIT_REGEX})*"
+MATH_EXPRESSION_REGEX = rf"({MATH_SIDE_REGEX}(?:\s*=\s*{MATH_SIDE_REGEX})+)"
 
 def generateInputs(seeds: list[Seed]):
   """Creates file inputs.json containing inputs with conversation left for the user to fill. Pairs seed problems with applicable scenarios and derives student_state deterministically."""
@@ -195,13 +200,25 @@ def generateProbes(seeds: list[Seed]):
         case _:
           pass
 
-
   # Apply perturbations
 
 
 # ADVERSARIAL FUNCTIONS
 
-
+# If a new seed problem or input requires a multi-letter math token to answer, then this function breaks
+def injectLatex(item):
+  new = copy.deepcopy(item)
+  for turn in new["conversation"]:
+    if turn["role"] == "student":
+      if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["conversation"]):
+        turn["conversation"] = \
+          re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", "$x=\1$, $x=\2$", turn["conversation"], count=0)
+      elif re.search(MATH_EXPRESSION_REGEX, turn["conversation"]):
+        turn["conversation"] = \
+          re.sub(MATH_EXPRESSION_REGEX, "$\1$", turn["conversation"], count=0)
+      else:
+        turn["conversation"] = \
+          re.sub(r"(\d+)", "$\1$", turn["conversation"], count=0)
 
 # HELPER FUNCTIONS
 
