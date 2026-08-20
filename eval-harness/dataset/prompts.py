@@ -16,15 +16,16 @@ def generateStudentInquiryPrompt(problemText: str, priorHint: str):
     'Respond with JSON only: {"content": "<the student message>"}'
   )
 
-def generateMutateAnswerPrompt(correctAnswer: str):
+def generateMutateAnswerPrompt(problemText: str, correctAnswer: str):
   return (
-    "You will be given a correct answer to a math problem a student might provide, without working. You will not "
-    "be given the original problem.\n"
+    "You will be given a correct answer to a math problem a student might provide, without working.\n"
     "Your job is to simply mutate the answer so that it is incorrect by transposing digits, introducing an off-by-one error "
     "or flipping the signs w/o producing an equivalent answer.\n"
-    "You are not permitted to transpose digits if the number in the answer is single-digit or a palindrome. "
+    "You are not permitted to transpose digits if the number in the answer is single-digit or a palindrome.\n"
+    "Maintain the structure (e.g., x=3,x=2 → x=[num1],x=[num2])\n"
     "The mutated answer must be the only thing in your response. No preamble/chain-of-thought, no markdown, no newlines, no quotes."
     "\n\n"
+    f"The original problem is: {problemText}"
     f"The given correct answer is: {correctAnswer}"
   )
 
