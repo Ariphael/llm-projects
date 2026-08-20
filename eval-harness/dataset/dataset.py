@@ -147,54 +147,63 @@ def generateProbes(seeds: list[Seed]):
   for topic, problemText, knownAnswer in seeds:
     for rtype in ALL_RTYPES:
       itemId = f"{rtype}-{topic}"
-      if rtype == "start":
-        data["probes"].append({
-          "item_id": itemId,
-          "response_type": rtype,
-          "topic": topic,
-          "converation": [],
-          "student_state": { "attempts": 0, "hints_used": 0 }
-        })
-      elif rtype == "hint":
-        data["probes"].append({
-          "item_id": itemId,
-          "response_type": rtype,
-          "topic": topic,
-          "conversation": [
-            { "role": "tutor", "content": problemText },
-            { "role": "student", "content": "i need a hint" }
-          ],
-          "student_state": { "attempts": 0, "hints_used": 0 }
-        })
-      elif rtype == "skip":
-        data["probes"].append({
-          "item_id": itemId,
-          "response_type": rtype,
-          "topic": topic,
-          "conversation": [
-            { "role": "tutor", "content": problemText },
-            { "role": "student", "content": "[ skip question ]" }
-          ],
-          "student_state": { "attempts": 0, "hints_used": 0 }
-        })
-      elif rtype == "answer":
-        isCorrect = random.choice([True, False])
-        answer = knownAnswer if isCorrect else mutateAnswerHelper(knownAnswer)
-        data["probes"].append({
-          "item_id": itemId,
-          "response_type": rtype,
-          "topic": topic,
-          "conversation": [
-            { "role": "tutor", "content": problemText },
-            { "role": "student", "content": answer}
-          ],
-          "student_state": { "attempts": 1, "hints_used": 0 }
-        })
+      match rtype:
+        case "start":
+          data["probes"].append({
+            "item_id": itemId,
+            "response_type": rtype,
+            "topic": topic,
+            "converation": [],
+            "student_state": { "attempts": 0, "hints_used": 0 }
+          })
+        case "hint":
+          data["probes"].append({
+            "item_id": itemId,
+            "response_type": rtype,
+            "topic": topic,
+            "conversation": [
+              { "role": "tutor", "content": problemText },
+              { "role": "student", "content": "i need a hint" }
+            ],
+            "student_state": { "attempts": 0, "hints_used": 0 }
+          })
+        case "skip":
+          data["probes"].append({
+            "item_id": itemId,
+            "response_type": rtype,
+            "topic": topic,
+            "conversation": [
+              { "role": "tutor", "content": problemText },
+              { "role": "student", "content": "[ skip question ]" }
+            ],
+            "student_state": { "attempts": 0, "hints_used": 0 }
+          })
+        case "answer":
+          isCorrect = random.choice([True, False])
+          answer = knownAnswer if isCorrect else mutateAnswerHelper(knownAnswer)
+          data["probes"].append({
+            "item_id": itemId,
+            "response_type": rtype,
+            "topic": topic,
+            "conversation": [
+              { "role": "tutor", "content": problemText },
+              { "role": "student", "content": answer }
+            ],
+            "student_state": { "attempts": 1, "hints_used": 0 },
+            "student_answer_correct": isCorrect
+          })
+        case _:
+          pass
+
 
   # Apply perturbations
 
 
 # ADVERSARIAL FUNCTIONS
+
+
+
+# HELPER FUNCTIONS
 
 def mutateAnswerHelper(answer: str):
   return queryLLM(
