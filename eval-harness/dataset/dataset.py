@@ -85,6 +85,23 @@ ASSIGNMENTS = {
   ("answer", "after_many_attempts"): ["simultaneous", "quadratics"],
 }
 
+UNICODE_MAP = {
+  "<=": "≤",
+  ">=": "≥",
+  "sqrt": "√",
+  "^2": "²",
+  "-": "–"
+}
+
+FILLER_PAIRS = [
+  ({"role": "student", "content": "ok"},
+   {"role": "tutor",   "content": "Take your time."}),
+  ({"role": "student", "content": "can you explain that again?"},
+   {"role": "tutor",   "content": "Sure — which part would you like me to go over?"}),
+  ({"role": "student", "content": "got it, thanks"},
+   {"role": "tutor",   "content": "Great. Let's keep going."}),
+]
+
 ARITHMETIC_REGEX = r"[a-zA-Z0-9_().\s]+[+\-*/=][a-zA-Z0-9_().\s]*=[a-zA-Z0-9_().\s]+"
 MATH_UNIT_REGEX = r"(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])|[-+*/^()])"
 MATH_SIDE_REGEX = rf"{MATH_UNIT_REGEX}(?:\s*{MATH_UNIT_REGEX})*"
@@ -210,16 +227,45 @@ def injectLatex(item):
   new = copy.deepcopy(item)
   for turn in new["conversation"]:
     if turn["role"] == "student":
-      if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["conversation"]):
-        turn["conversation"] = \
-          re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", r"$x=\1$, $x=\2$", turn["conversation"], count=0)
-      elif re.search(MATH_EXPRESSION_REGEX, turn["conversation"]):
-        for expression in re.split(MATH_EXPRESSION_REGEX, turn["conversation"]):
+      if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["content"]):
+        turn["content"] = \
+          re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", r"$x=\1$, $x=\2$", turn["content"])
+      elif re.search(MATH_EXPRESSION_REGEX, turn["content"]):
+        for expression in re.split(MATH_EXPRESSION_REGEX, turn["content"]):
           if "=" in expression:
-            turn["conversation"] = re.sub(rf"({expression})", r"$\1$", turn["conversation"])
+            turn["content"] = re.sub(rf"({expression})", r"$\1$", turn["content"])
       else:
-        turn["conversation"] = \
-          re.sub(r"(\d+)", r"$\1$", turn["conversation"], count=0)
+        turn["content"] = \
+          re.sub(r"(\d+)", r"$\1$", turn["content"])
+  new["item_id"] = item["item_id"] + "-latex"
+  return new
+
+def injectUnicode(item):
+  new = copy.deepcopy(item)
+  for turn in new["conversation"]:
+    if turn["role"] == "student":
+      for pat, repl in UNICODE_MAP.items():
+        turn["content"] = str.replace(turn["content"], pat, repl)
+      turn["content"] = re.sub(r"\"(.*)\"", r"“\1”", turn["content"])
+      turn["content"] = re.sub(r"'(.*)'", r"‘\1’", turn["content"])
+  new["item_id"] = item["item_id"] + "-unicode"
+  return new
+
+def empty(item):
+  new = copy.deepcopy(item)
+  # The last turn in the conversation is always from the student
+  new["conversation"][-1] = { "role": "student", "content": "" }
+  new["item_id"] = item["item_id"] + "-empty"
+  return new
+
+def pad(item, pairs=6):
+  new = copy.deepcopy(item)
+  filler = []
+  for i in range(pairs):
+    filler.append(FILLER_PAIRS[i % len(FILLER_PAIRS)])
+  new["conversation"] = new["conversation"][:1] + filler + new["conversation"][1:]
+  new["item_id"] = item["item_id"] + "-padded"
+  return new
 
 # HELPER FUNCTIONS
 
