@@ -212,13 +212,14 @@ def injectLatex(item):
     if turn["role"] == "student":
       if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["conversation"]):
         turn["conversation"] = \
-          re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", "$x=\1$, $x=\2$", turn["conversation"], count=0)
+          re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", r"$x=\1$, $x=\2$", turn["conversation"], count=0)
       elif re.search(MATH_EXPRESSION_REGEX, turn["conversation"]):
-        turn["conversation"] = \
-          re.sub(MATH_EXPRESSION_REGEX, "$\1$", turn["conversation"], count=0)
+        for expression in re.split(MATH_EXPRESSION_REGEX, turn["conversation"]):
+          if "=" in expression:
+            turn["conversation"] = re.sub(rf"({expression})", r"$\1$", turn["conversation"])
       else:
         turn["conversation"] = \
-          re.sub(r"(\d+)", "$\1$", turn["conversation"], count=0)
+          re.sub(r"(\d+)", r"$\1$", turn["conversation"], count=0)
 
 # HELPER FUNCTIONS
 
