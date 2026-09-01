@@ -33,7 +33,9 @@ def queryLLM(model: str, messages: list[dict[str, any]]):
       )
       response.raise_for_status()
       response = response.json()
-      return response["choices"][0]["message"]
+      response = response["choices"][0]["message"]
+
+      return response.get("content")
     except requests.exceptions.HTTPError:
       if response.status_code == 429 or 500 <= response.status_code <= 599:
         print(f"LLM Query POST request failed. Received status {response.status_code}")
