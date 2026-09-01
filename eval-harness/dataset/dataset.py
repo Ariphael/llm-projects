@@ -202,7 +202,7 @@ def generateProbes(seeds: list[Seed]):
           })
         case "answer":
           isCorrect = random.choice([True, False])
-          answer = knownAnswer if isCorrect else mutateAnswerHelper(knownAnswer)
+          answer = knownAnswer if isCorrect else mutateAnswerHelper(problemText, knownAnswer)
           data["probes"].append({
             "item_id": itemId,
             "response_type": rtype,
@@ -218,7 +218,14 @@ def generateProbes(seeds: list[Seed]):
           pass
 
   # Apply perturbations
+  for item in data["probes"]:
+    data["probes"].append(injectLatex(item))
+    data["probes"].append(injectUnicode(item))
+    data["probes"].append(empty(item))
+    data["probes"].append(pad(item))
 
+  with open("probes.json", "w", encoding="utf-8") as file:
+    json.dump(data, file, indent=2)
 
 # ADVERSARIAL FUNCTIONS
 
@@ -269,12 +276,19 @@ def pad(item, pairs=6):
 
 # HELPER FUNCTIONS
 
-def mutateAnswerHelper(answer: str):
+def mutateAnswerHelper(problemText: str, answer: str):
   return queryLLM(
     DATASET_MODEL,
-    [{ "role": "system", "message": generateMutateAnswerPrompt(answer) }]
+    [{ "role": "system", "message": generateMutateAnswerPrompt(problemText, answer) }]
   )
 
 if __name__ == "__main__":
+  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs, probes"]:
+    print("Usage: python dataset.py [inputs|probes]")
+    sys.exit(1)
+
   with open("seeds.json", "r", encoding="utf-8") as file:
-    generateInputs(json.load(file)["seeds"])
+    if sys.argv[1] == "inputs":
+      generateInputs(json.load(file)["seeds"])
+    elif sys.argv[1] == "probes":
+      generateProbes(json.load(file)["seeds"])
