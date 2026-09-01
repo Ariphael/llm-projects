@@ -1,5 +1,3 @@
-from dataset import Seed
-
 def generateStudentInquiryPrompt(problemText: str, priorHint: str):
   return (
     "You are simulating a student in an AI math tutoring session. "
