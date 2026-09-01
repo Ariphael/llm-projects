@@ -166,7 +166,8 @@ def generateInputs(seeds: list[Seed]):
 def generateProbes(seeds: list[Seed]):
   data = { "probes": [] }
 
-  for topic, problemText, knownAnswer in seeds:
+  for s in seeds:
+    topic, problemText, knownAnswer = s["topic"], s["problem_text"], s["known_answer"]
     for rtype in ALL_RTYPES:
       itemId = f"{rtype}-{topic}"
       match rtype:
@@ -175,7 +176,7 @@ def generateProbes(seeds: list[Seed]):
             "item_id": itemId,
             "response_type": rtype,
             "topic": topic,
-            "converation": [],
+            "conversation": [],
             "student_state": { "attempts": 0, "hints_used": 0 }
           })
         case "hint":
@@ -217,12 +218,25 @@ def generateProbes(seeds: list[Seed]):
         case _:
           pass
 
+  print(data["probes"])
+
   # Apply perturbations
+  perturbations = []
   for item in data["probes"]:
-    data["probes"].append(injectLatex(item))
-    data["probes"].append(injectUnicode(item))
-    data["probes"].append(empty(item))
-    data["probes"].append(pad(item))
+    if item["response_type"] in ["start", "skip"]:
+      continue
+    pertLatexItem, replCount = injectLatex(item)
+    if replCount > 0:
+      perturbations.append(injectLatex(pertLatexItem))
+
+    pertUnicodeItem, replCount = injectUnicode(item)
+    if replCount > 0:
+      perturbations.append(injectUnicode(pertUnicodeItem))
+
+    perturbations.append(empty(item))
+    perturbations.append(pad(item))
+
+  data["probes"].extend(perturbations)
 
   with open("probes.json", "w", encoding="utf-8") as file:
     json.dump(data, file, indent=2)
@@ -231,9 +245,10 @@ def generateProbes(seeds: list[Seed]):
 
 # If a new seed problem or input requires a multi-letter math token to answer, then this function breaks
 def injectLatex(item):
-  new = copy.deepcopy(item)
+  new, replCount = copy.deepcopy(item), 0
   for turn in new["conversation"]:
     if turn["role"] == "student":
+      before = turn["content"]
       if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["content"]):
         turn["content"] = \
           re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", r"$x=\1$, $x=\2$", turn["content"])
@@ -244,19 +259,27 @@ def injectLatex(item):
       else:
         turn["content"] = \
           re.sub(r"(\d+)", r"$\1$", turn["content"])
+
+      if turn["content"] != before:
+        replCount += 1
+
   new["item_id"] = item["item_id"] + "-latex"
-  return new
+  return (new, replCount)
 
 def injectUnicode(item):
-  new = copy.deepcopy(item)
+  new, replCount = copy.deepcopy(item), 0
   for turn in new["conversation"]:
     if turn["role"] == "student":
+      before = turn["content"]
       for pat, repl in UNICODE_MAP.items():
         turn["content"] = str.replace(turn["content"], pat, repl)
       turn["content"] = re.sub(r"\"(.*)\"", r"“\1”", turn["content"])
       turn["content"] = re.sub(r"'(.*)'", r"‘\1’", turn["content"])
+      if before != turn["content"]:
+        replCount += 1
+
   new["item_id"] = item["item_id"] + "-unicode"
-  return new
+  return (new, replCount)
 
 def empty(item):
   new = copy.deepcopy(item)
@@ -269,7 +292,7 @@ def pad(item, pairs=6):
   new = copy.deepcopy(item)
   filler = []
   for i in range(pairs):
-    filler.append(FILLER_PAIRS[i % len(FILLER_PAIRS)])
+    filler.extend(FILLER_PAIRS[i % len(FILLER_PAIRS)])
   new["conversation"] = new["conversation"][:1] + filler + new["conversation"][1:]
   new["item_id"] = item["item_id"] + "-padded"
   return new
@@ -279,11 +302,11 @@ def pad(item, pairs=6):
 def mutateAnswerHelper(problemText: str, answer: str):
   return queryLLM(
     DATASET_MODEL,
-    [{ "role": "system", "message": generateMutateAnswerPrompt(problemText, answer) }]
+    [{ "role": "system", "content": generateMutateAnswerPrompt(problemText, answer) }]
   )
 
 if __name__ == "__main__":
-  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs, probes"]:
+  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes"]:
     print("Usage: python dataset.py [inputs|probes]")
     sys.exit(1)
 
