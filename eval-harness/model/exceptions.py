@@ -5,3 +5,7 @@ class LLMQueryRetryLimitExceeded(Exception):
 class LLMQueryClientError(Exception):
   """Exception raised when an LLM query POST request returns status code 4xx. Not raised when status code is 429 (Timeout)"""
   pass
+
+class LLMNoContentGenerated(Exception):
+  """Exception raised when the LLM does not generate any content"""
+  pass
