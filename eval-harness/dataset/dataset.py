@@ -8,6 +8,7 @@ rootDir = Path(__file__).resolve().parent.parent
 sys.path.append(str(rootDir))
 
 from model.llm import queryLLM
+from model.prompts import generateOriginalTutorSystemPrompt
 from prompts import generateMutateAnswerPrompt
 
 load_dotenv()
@@ -106,6 +107,7 @@ ARITHMETIC_REGEX = r"[a-zA-Z0-9_().\s]+[+\-*/=][a-zA-Z0-9_().\s]*=[a-zA-Z0-9_().
 MATH_UNIT_REGEX = r"(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])|[-+*/^()])"
 MATH_SIDE_REGEX = rf"{MATH_UNIT_REGEX}(?:\s*{MATH_UNIT_REGEX})*"
 MATH_EXPRESSION_REGEX = rf"({MATH_SIDE_REGEX}(?:\s*=\s*{MATH_SIDE_REGEX})+)"
+JSON_REGEX = r"\{.*\}$"
 
 def generateInputs(seeds: list[Seed]):
   """Creates file inputs.json containing inputs with conversation left for the user to fill. Pairs seed problems with applicable scenarios and derives student_state deterministically."""
@@ -241,6 +243,73 @@ def generateProbes(seeds: list[Seed]):
   with open("probes.json", "w", encoding="utf-8") as file:
     json.dump(data, file, indent=2)
 
+def runDiscoveryPass():
+  # Runs probes through current CherryPi prompt
+  # Clusters by symptom categories:
+  # no-json-body - JSON body at end of response is omitted in a 'response' or 'skip' answer type
+  # json-body-included - JSON body included for 'hint' answer type
+  # schema-violation - required fields are not present in JSON response
+  # json-parse-error - JSON at end of response does not match
+
+  # result:
+  # {
+  #    'no-json-body': resItem,
+  #    'json-body-included': resItem,
+  # ...
+  # }
+
+  # resItem:
+  # {
+  #    count: int,
+  #    items: [list of { "item_id": str, "response": str }],
+  # }
+
+  probes = {}
+  result = {
+    "no_json_body": { "count": 0, "itemIds": [] },
+    "json_body_included": { "count": 0, "itemIds": [] },
+    "schema_violation": { "count": 0, "itemIds": [] },
+    "json_parse_error": { "count": 0, "itemIds": [] }
+  }
+
+  with open("probes.json", "r", encoding="utf-8") as file:
+    probes = json.load(file)
+
+  for probe in probes:
+    topic, resType, itemId = probe["topic"], probe["response_type"], probe["item_id"]
+    problem = probe["conversation"][0]["content"] if probe["conversation"] else []
+    systemPrompt = {
+      "role": "system",
+      "content": generateOriginalTutorSystemPrompt(topic, problem)
+    }
+    response = queryLLM(DATASET_MODEL, [systemPrompt] + probe["conversation"])
+
+    match = re.search(JSON_REGEX, response)
+    if match == None and resType in ["answer", "skip"]:
+      result["no_json_body"]["count"] += 1
+      result["no_json_body"]["items"].append({ "item_id": itemId, "response": response })
+    elif match != None and resType in ["start", "hint"]:
+      result["json_body_included"]["count"] += 1
+      result["json_body_included"]["items"].append({ "item_id": itemId, "response": response })
+
+    try:
+      if match:
+        data = json.loads(match.group(0))
+        if resType == "answer":
+          if len(data) != 1 or "correct" not in data:
+            result["schema_violation"]["count"] += 1
+            result["schema_violation"]["items"].append({ "item_id": itemId, "response": response })
+        elif resType == "skip":
+          if len(data) != 1 or "new_question" not in data:
+            result["schema_violation"]["count"] += 1
+            result["schema_violation"]["items"].append({ "item_id": itemId, "response": response })
+    except json.JSONDecodeError as e:
+      result["json_parse_error"]["count"] += 1
+      result["json_parse_error"]["items"].append({ "item_id": itemId, "response": response })
+
+  with open("discovery_pass.json", "w", encoding="utf-8"):
+    json.dump(result, file, indent=2)
+
 # ADVERSARIAL FUNCTIONS
 
 # If a new seed problem or input requires a multi-letter math token to answer, then this function breaks
@@ -307,7 +376,7 @@ def mutateAnswerHelper(problemText: str, answer: str):
 
 if __name__ == "__main__":
   if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes"]:
-    print("Usage: python dataset.py [inputs|probes]")
+    print("Usage: python dataset.py [inputs|probes|pass]")
     sys.exit(1)
 
   with open("seeds.json", "r", encoding="utf-8") as file:
@@ -315,3 +384,5 @@ if __name__ == "__main__":
       generateInputs(json.load(file)["seeds"])
     elif sys.argv[1] == "probes":
       generateProbes(json.load(file)["seeds"])
+    elif sys.argv[1] == "pass":
+      runDiscoveryPass()
