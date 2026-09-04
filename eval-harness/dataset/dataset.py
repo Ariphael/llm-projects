@@ -95,12 +95,12 @@ UNICODE_MAP = {
 }
 
 FILLER_PAIRS = [
-  ({"role": "student", "content": "ok"},
-   {"role": "tutor",   "content": "Take your time."}),
-  ({"role": "student", "content": "can you explain that again?"},
-   {"role": "tutor",   "content": "Sure — which part would you like me to go over?"}),
-  ({"role": "student", "content": "got it, thanks"},
-   {"role": "tutor",   "content": "Great. Let's keep going."}),
+  ({"role": "user", "content": "ok"},
+   {"role": "assistant",   "content": "Take your time."}),
+  ({"role": "user", "content": "can you explain that again?"},
+   {"role": "assistant",   "content": "Sure — which part would you like me to go over?"}),
+  ({"role": "user", "content": "got it, thanks"},
+   {"role": "assistant",   "content": "Great. Let's keep going."}),
 ]
 
 ARITHMETIC_REGEX = r"[a-zA-Z0-9_().\s]+[+\-*/=][a-zA-Z0-9_().\s]*=[a-zA-Z0-9_().\s]+"
@@ -132,12 +132,12 @@ def generateInputs(seeds: list[Seed]):
       if not studentState:
         raise KeyError(f"Invalid scenario name: {scenarioName}")
 
-      conversation = [{ "role": "tutor", "content": seedMap[seed]["problem_text"] }]
+      conversation = [{ "role": "assistant", "content": seedMap[seed]["problem_text"] }]
       if rtype == "skip":
-        conversation.append({ "role": "student", "content": "[ skip question ]"})
+        conversation.append({ "role": "user", "content": "[ skip question ]"})
 
       for _ in range(scenario["state"]["attempts"]):
-        conversation.append({ "role": "student", "content": None})
+        conversation.append({ "role": "user", "content": None})
 
       itemId = f"{rtype}-{seed}-{scenarioName}"
 
@@ -168,8 +168,11 @@ def generateInputs(seeds: list[Seed]):
 def generateProbes(seeds: list[Seed]):
   data = { "probes": [] }
 
+  print("Generating probes...\n")
   for s in seeds:
     topic, problemText, knownAnswer = s["topic"], s["problem_text"], s["known_answer"]
+    print(f"Processing seed item ({topic} - '{problemText}')")
+
     for rtype in ALL_RTYPES:
       itemId = f"{rtype}-{topic}"
       match rtype:
@@ -187,8 +190,8 @@ def generateProbes(seeds: list[Seed]):
             "response_type": rtype,
             "topic": topic,
             "conversation": [
-              { "role": "tutor", "content": problemText },
-              { "role": "student", "content": "i need a hint" }
+              { "role": "assistant", "content": problemText },
+              { "role": "user", "content": "i need a hint" }
             ],
             "student_state": { "attempts": 0, "hints_used": 0 }
           })
@@ -198,8 +201,8 @@ def generateProbes(seeds: list[Seed]):
             "response_type": rtype,
             "topic": topic,
             "conversation": [
-              { "role": "tutor", "content": problemText },
-              { "role": "student", "content": "[ skip question ]" }
+              { "role": "assistant", "content": problemText },
+              { "role": "user", "content": "[ skip question ]" }
             ],
             "student_state": { "attempts": 0, "hints_used": 0 }
           })
@@ -211,8 +214,8 @@ def generateProbes(seeds: list[Seed]):
             "response_type": rtype,
             "topic": topic,
             "conversation": [
-              { "role": "tutor", "content": problemText },
-              { "role": "student", "content": answer }
+              { "role": "assistant", "content": problemText },
+              { "role": "user", "content": answer }
             ],
             "student_state": { "attempts": 1, "hints_used": 0 },
             "student_answer_correct": isCorrect
@@ -220,7 +223,7 @@ def generateProbes(seeds: list[Seed]):
         case _:
           pass
 
-  print(data["probes"])
+  print("\nApplying perturbations...\n")
 
   # Apply perturbations
   perturbations = []
@@ -229,27 +232,32 @@ def generateProbes(seeds: list[Seed]):
       continue
     pertLatexItem, replCount = injectLatex(item)
     if replCount > 0:
-      perturbations.append(injectLatex(pertLatexItem))
+      perturbations.append(pertLatexItem)
 
     pertUnicodeItem, replCount = injectUnicode(item)
     if replCount > 0:
-      perturbations.append(injectUnicode(pertUnicodeItem))
+      perturbations.append(pertUnicodeItem)
 
     perturbations.append(empty(item))
     perturbations.append(pad(item))
 
   data["probes"].extend(perturbations)
 
-  with open("probes.json", "w", encoding="utf-8") as file:
-    json.dump(data, file, indent=2)
+  try:
+    with open("probes.json", "w", encoding="utf-8") as file:
+      json.dump(data, file, indent=2)
+      print("Finished. Wrote discovery pass probes to file probes.json")
+  except OSError as e:
+    print(f"Failed to write to file 'probes.json': {e}")
+    sys.exit(1)
 
 def runDiscoveryPass():
   # Runs probes through current CherryPi prompt
   # Clusters by symptom categories:
-  # no-json-body - JSON body at end of response is omitted in a 'response' or 'skip' answer type
-  # json-body-included - JSON body included for 'hint' answer type
-  # schema-violation - required fields are not present in JSON response
-  # json-parse-error - JSON at end of response does not match
+  # no_json_body - JSON body at end of response is omitted in a 'response' or 'skip' answer type
+  # json_body_included - JSON body included for 'hint' answer type
+  # schema_violation - required fields are not present in JSON response
+  # json_parse_error - JSON at end of response does not match
 
   # result:
   # {
@@ -266,23 +274,34 @@ def runDiscoveryPass():
 
   probes = {}
   result = {
-    "no_json_body": { "count": 0, "itemIds": [] },
-    "json_body_included": { "count": 0, "itemIds": [] },
-    "schema_violation": { "count": 0, "itemIds": [] },
-    "json_parse_error": { "count": 0, "itemIds": [] }
+    "no_json_body": { "count": 0, "items": [] },
+    "json_body_included": { "count": 0, "items": [] },
+    "schema_violation": { "count": 0, "items": [] },
+    "json_parse_error": { "count": 0, "items": [] }
   }
 
-  with open("probes.json", "r", encoding="utf-8") as file:
-    probes = json.load(file)
+  try:
+    with open("probes.json", "r", encoding="utf-8") as file:
+      probes = json.load(file)
+      probes = probes["probes"]
+  except OSError:
+    print("Error: File 'probes.json' is missing. Generate probes first using 'python dataset.py probes'")
+    sys.exit(1)
+
+  print(f"Loaded {len(probes)} probes...\n")
 
   for probe in probes:
     topic, resType, itemId = probe["topic"], probe["response_type"], probe["item_id"]
+    print(f"Processing probe ({itemId})")
     problem = probe["conversation"][0]["content"] if probe["conversation"] else []
     systemPrompt = {
       "role": "system",
       "content": generateOriginalTutorSystemPrompt(topic, problem)
     }
+
     response = queryLLM(DATASET_MODEL, [systemPrompt] + probe["conversation"])
+
+    print(f"Generated response: {response}")
 
     match = re.search(JSON_REGEX, response)
     if match == None and resType in ["answer", "skip"]:
@@ -307,8 +326,13 @@ def runDiscoveryPass():
       result["json_parse_error"]["count"] += 1
       result["json_parse_error"]["items"].append({ "item_id": itemId, "response": response })
 
-  with open("discovery_pass.json", "w", encoding="utf-8"):
-    json.dump(result, file, indent=2)
+  try:
+    with open("discovery_pass.json", "w", encoding="utf-8"):
+      json.dump(result, file, indent=2)
+    print("Finished. Wrote discovery pass results to discovery_pass.json")
+  except OSError as e:
+    print(f"Failed to write to file 'discovyer_pass.json': {e}")
+    sys.exit(1)
 
 # ADVERSARIAL FUNCTIONS
 
@@ -316,7 +340,7 @@ def runDiscoveryPass():
 def injectLatex(item):
   new, replCount = copy.deepcopy(item), 0
   for turn in new["conversation"]:
-    if turn["role"] == "student":
+    if turn["role"] == "user":
       before = turn["content"]
       if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["content"]):
         turn["content"] = \
@@ -338,7 +362,7 @@ def injectLatex(item):
 def injectUnicode(item):
   new, replCount = copy.deepcopy(item), 0
   for turn in new["conversation"]:
-    if turn["role"] == "student":
+    if turn["role"] == "user":
       before = turn["content"]
       for pat, repl in UNICODE_MAP.items():
         turn["content"] = str.replace(turn["content"], pat, repl)
@@ -353,7 +377,7 @@ def injectUnicode(item):
 def empty(item):
   new = copy.deepcopy(item)
   # The last turn in the conversation is always from the student
-  new["conversation"][-1] = { "role": "student", "content": "" }
+  new["conversation"][-1] = { "role": "user", "content": "" }
   new["item_id"] = item["item_id"] + "-empty"
   return new
 
@@ -375,7 +399,7 @@ def mutateAnswerHelper(problemText: str, answer: str):
   )
 
 if __name__ == "__main__":
-  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes"]:
+  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes", "pass"]:
     print("Usage: python dataset.py [inputs|probes|pass]")
     sys.exit(1)
 
