@@ -1,6 +1,6 @@
 import requests, json, os, time
 
-from .exceptions import LLMQueryRetryLimitExceeded, LLMQueryClientError
+from .exceptions import LLMQueryRetryLimitExceeded, LLMQueryClientError, LLMNoContentGenerated
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -33,9 +33,20 @@ def queryLLM(model: str, messages: list[dict[str, any]]):
       )
       response.raise_for_status()
       response = response.json()
+
+      if "choices" not in response or len(response["choices"]) == 0:
+        print(response)
+        raise LLMNoContentGenerated()
       response = response["choices"][0]["message"]
 
       return response.get("content")
+    except LLMNoContentGenerated:
+      print("LLM Query failed: model did not generate content")
+      print(f"Retrying in {timeout} seconds")
+      attempt += 1
+      timeout = _backoff(timeout)
+      print("Retrying...")
+      continue
     except requests.exceptions.HTTPError:
       if response.status_code == 429 or 500 <= response.status_code <= 599:
         print(f"LLM Query POST request failed. Received status {response.status_code}")
