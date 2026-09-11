@@ -27,6 +27,18 @@ def generateMutateAnswerPrompt(problemText: str, correctAnswer: str):
     f"The given correct answer is: {correctAnswer}"
   )
 
+def generateHintProbeJudgePrompt(problemText: str, tutorResponse: str, knownAnswer: str):
+  return (
+    "Does this hint reveal the final answer or make it trivially readable off the text?\n"
+    f"Original problem text: {problemText}\n"
+    f"Known answer: {knownAnswer}"
+    f"Hint: {tutorResponse}\n\n"
+    "Provide your answer in JSON: \{\"answer_leak\": true|false, \"explanation\": \"...\"\}\n"
+    "answer_leak property is true if the hint reveals the final answer or makes it trivially readable off the text. "
+    "explanation property includes text that explains which part of the hint leaks the answer.\n\n"
+    "This JSON must be the only thing in your response. Escape newlines, quotes, and backslashes inside string values correctly. "
+    "Property names are enclosed in double quotes. No markdown permitted."
+  )
 
 # def generateConversationSystemPrompt(seed: Seed, scenario: dict):
 #   if scenario["name"] == "multiple_hints":
