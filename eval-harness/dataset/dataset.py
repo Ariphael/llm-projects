@@ -1,4 +1,4 @@
-import json, random, sys, os, copy, re
+import json, random, sys, os, copy, re, time
 
 from pathlib import Path
 from typing import TypedDict
@@ -10,7 +10,7 @@ sys.path.append(str(rootDir))
 
 from model.llm import queryLLM
 from model.prompts import generateOriginalTutorSystemPrompt
-from prompts import generateMutateAnswerPrompt
+from prompts import generateMutateAnswerPrompt, generateHintProbeJudgePrompt
 
 load_dotenv()
 
@@ -96,11 +96,11 @@ UNICODE_MAP = {
 }
 
 FILLER_PAIRS = [
-  ({"role": "user", "content": "ok"},
+  ({"role": "user", "content": "[ hint ]\nok"},
    {"role": "assistant",   "content": "Take your time."}),
-  ({"role": "user", "content": "can you explain that again?"},
+  ({"role": "user", "content": "[ hint ]\ncan you explain that again?"},
    {"role": "assistant",   "content": "Sure — which part would you like me to go over?"}),
-  ({"role": "user", "content": "got it, thanks"},
+  ({"role": "user", "content": "[ hint ]\ngot it, thanks"},
    {"role": "assistant",   "content": "Great. Let's keep going."}),
 ]
 
@@ -109,6 +109,8 @@ MATH_UNIT_REGEX = r"(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])|[-+*/^()]
 MATH_SIDE_REGEX = rf"{MATH_UNIT_REGEX}(?:\s*{MATH_UNIT_REGEX})*"
 MATH_EXPRESSION_REGEX = rf"({MATH_SIDE_REGEX}(?:\s*=\s*{MATH_SIDE_REGEX})+)"
 JSON_REGEX = r"\{.*\}$"
+
+DATASET_MODEL_MAX_RETRIES = 5
 
 def generateInputs(seeds: list[Seed]):
   """Creates file inputs.json containing inputs with conversation left for the user to fill. Pairs seed problems with applicable scenarios and derives student_state deterministically."""
@@ -192,7 +194,7 @@ def generateProbes(seeds: list[Seed]):
             "topic": topic,
             "conversation": [
               { "role": "assistant", "content": problemText },
-              { "role": "user", "content": "i need a hint" }
+              { "role": "user", "content": "[ hint ]\ni need a hint" }
             ],
             "student_state": { "attempts": 0, "hints_used": 0 }
           })
@@ -216,7 +218,7 @@ def generateProbes(seeds: list[Seed]):
             "topic": topic,
             "conversation": [
               { "role": "assistant", "content": problemText },
-              { "role": "user", "content": answer }
+              { "role": "user", "content": f"[ answer ]\n{answer}" }
             ],
             "student_state": { "attempts": 1, "hints_used": 0 },
             "student_answer_correct": isCorrect
@@ -275,6 +277,7 @@ def runDiscoveryPass():
 
   probes = {}
   result = {
+    "answer_leak": { "count": 0, "items": [] },
     "no_json_body": { "count": 0, "items": [] },
     "json_body_included": { "count": 0, "items": [] },
     "schema_violation": { "count": 0, "items": [] },
@@ -355,7 +358,7 @@ def injectUnicode(item):
 def empty(item):
   new = copy.deepcopy(item)
   # The last turn in the conversation is always from the student
-  new["conversation"][-1] = { "role": "user", "content": "" }
+  new["conversation"][-1] = { "role": "user", "content": f"[ {new["response_type"]} ]" }
   new["item_id"] = item["item_id"] + "-empty"
   return new
 
@@ -376,6 +379,29 @@ def mutateAnswerHelper(problemText: str, answer: str):
     [{ "role": "system", "content": generateMutateAnswerPrompt(problemText, answer) }]
   )
 
+def backoff(timeout):
+  time.sleep(timeout)
+  return timeout * 2
+
+def answerLeakJudgeHelper(problemText: str, tutorResponse: str, knownAnswer: str):
+  attempt, timeout = 0, 2
+
+  while attempt < DATASET_MODEL_MAX_RETRIES:
+    try:
+      response = queryLLM(
+        DATASET_MODEL,
+        [{ "role": "system", "content": generateHintProbeJudgePrompt(problemText, tutorResponse, knownAnswer) }]
+      )
+      response = json.loads(response)
+      return response
+    except json.JSONDecodeError as e:
+      attempt += 1
+      timeout = backoff(timeout)
+      continue
+
+  return None
+
+
 def processProbeHelper(probe):
   # Runs probe through CherryPi prompt, returning an object array indicating the
   # symptom categories detected in the response:
@@ -384,7 +410,7 @@ def processProbeHelper(probe):
   # schema_violation - required fields are not present in JSON response
   # json_parse_error - JSON at end of response does not match
 
-  # res = [{ "error": ("no_json_body"|"json_body_included"|"schema_violation"|"json_parse_error"|"call_failed"), item_id, response}, ...]
+  # res = [{ "error": ("no_json_body"|"json_body_included"|"schema_violation"|"json_parse_error"|"call_failed"|"answer_leak"), item_id, response, explanation? }, ...]
   res = []
 
   topic, resType, itemId = probe["topic"], probe["response_type"], probe["item_id"]
@@ -420,6 +446,25 @@ def processProbeHelper(probe):
           res.append({ "error": "schema_violation", "item_id": itemId, "response": response })
   except json.JSONDecodeError as e:
     res.append({ "error": "json_parse_error", "item_id": itemId, "response": response })
+
+  if resType == "hint":
+    seeds = []
+    try:
+      with open("seeds.json", "r", encoding="utf-8") as file:
+        seeds = json.load(file)["seeds"]
+    except OSError:
+      print("Error: File 'seeds.json' is missing.")
+      return res
+
+    isCorrectSeed = lambda seed, topic: seed["topic"] == topic
+    seedMatches = [s for s in seeds if isCorrectSeed(s, topic)]
+    knownAnswer = seedMatches[0]["known_answer"]
+
+    problemText = probe["conversation"][0]["content"]
+
+    judge = answerLeakJudgeHelper(problemText, response, knownAnswer)
+    if not judge or judge["answer_leak"] == True:
+      res.append({ "error": "answer_leak", "item_id": itemId, "response": response, "explanation": judge["explanation"]})
 
   return res
 
