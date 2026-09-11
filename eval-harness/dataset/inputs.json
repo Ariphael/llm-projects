@@ -301,7 +301,7 @@
         },
         {
           "role": "student",
-          "content": "i have no idea where to start"
+          "content": "[ hint ]\ni have no idea where to start"
         }
       ],
       "student_state": {
@@ -320,7 +320,7 @@
         },
         {
           "role": "student",
-          "content": "where do i start?"
+          "content": "[ hint ]\nwhere do i start?"
         }
       ],
       "student_state": {
@@ -339,7 +339,7 @@
         },
         {
           "role": "student",
-          "content": "I don't understand the question"
+          "content": "[ hint ]\nI don't understand the question"
         }
       ],
       "student_state": {
@@ -358,7 +358,7 @@
         },
         {
           "role": "student",
-          "content": "I'm stuck. Do I plus or multiply to solve this?"
+          "content": "[ hint ]\nI'm stuck. Do I plus or multiply to solve this?"
         }
       ],
       "student_state": {
@@ -377,15 +377,15 @@
         },
         {
           "role": "student",
-          "content": "1533"
+          "content": "[ answer ]\n1533"
         },
         {
           "role": "tutor",
-          "content": "Your answer is not quite correct. Try again"
+          "content": "Your answer is not quite correct. Try again\n\n{ 'correct': false }"
         },
         {
           "role": "student",
-          "content": "how do i approach this?"
+          "content": "[ hint ]\nhow do i approach this?"
         }
       ],
       "student_state": {
@@ -404,7 +404,7 @@
         },
         {
           "role": "student",
-          "content": "17.15 per large box and 3.08 per small box"
+          "content": "[ answer ]\n17.15 per large box and 3.08 per small box"
         },
         {
           "role": "tutor",
@@ -412,7 +412,7 @@
         },
         {
           "role": "student",
-          "content": "How do I solve this?"
+          "content": "[ hint ]\nHow do I solve this?"
         }
       ],
       "student_state": {
@@ -431,7 +431,7 @@
         },
         {
           "role": "student",
-          "content": "$2.72"
+          "content": "[ answer ]\n$2.72"
         },
         {
           "role": "tutor",
@@ -439,7 +439,7 @@
         },
         {
           "role": "student",
-          "content": "help im stuck"
+          "content": "[ hint ]\nhelp im stuck"
         }
       ],
       "student_state": {
@@ -458,7 +458,7 @@
         },
         {
           "role": "student",
-          "content": "I would like a hint"
+          "content": "[ hint ]\nI would like a hint"
         },
         {
           "role": "tutor",
@@ -466,7 +466,7 @@
         },
         {
           "role": "student",
-          "content": "wait why do they have to add to -5? i dont get where the adding part comes from"
+          "content": "[ hint ]\nwait why do they have to add to -5? i dont get where the adding part comes from"
         }
       ],
       "student_state": {
@@ -485,7 +485,7 @@
         },
         {
           "role": "student",
-          "content": "i need some help. How do i get x on one side without making sign errors?"
+          "content": "[ hint ]\ni need some help. How do i get x on one side without making sign errors?"
         },
         {
           "role": "tutor",
@@ -493,7 +493,7 @@
         },
         {
           "role": "student",
-          "content": "wait does -2(x-3) become -2x-6 or -2x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
+          "content": "[ hint ]\nwait does -2(x-3) become -2x-6 or -2x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
         }
       ],
       "student_state": {
@@ -512,7 +512,7 @@
         },
         {
           "role": "student",
-          "content": "i'm stuck where do I begin?"
+          "content": "[ hint ]\ni'm stuck where do I begin?"
         },
         {
           "role": "tutor",
@@ -520,7 +520,7 @@
         },
         {
           "role": "student",
-          "content": "wait so do i multiply the -2 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
+          "content": "[ hint ]\nwait so do i multiply the -2 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
         }
       ],
       "student_state": {
@@ -539,7 +539,7 @@
         },
         {
           "role": "student",
-          "content": "x = -3, x = -2"
+          "content": "[ answer ]\nx = -3, x = -2"
         }
       ],
       "student_state": {
@@ -559,7 +559,7 @@
         },
         {
           "role": "student",
-          "content": "17.15 per large box, 3.08 per small box"
+          "content": "[ answer ]\n17.15 per large box, 3.08 per small box"
         }
       ],
       "student_state": {
@@ -579,7 +579,7 @@
         },
         {
           "role": "student",
-          "content": "c=3 ?"
+          "content": "[ answer ]\nc=3 ?"
         }
       ],
       "student_state": {
@@ -599,7 +599,7 @@
         },
         {
           "role": "student",
-          "content": "6"
+          "content": "[ answer ]\n6"
         }
       ],
       "student_state": {
@@ -619,7 +619,7 @@
         },
         {
           "role": "student",
-          "content": "$4.08"
+          "content": "[ answer ]\n$4.08"
         }
       ],
       "student_state": {
@@ -639,7 +639,7 @@
         },
         {
           "role": "student",
-          "content": "How do i start?"
+          "content": "[ hint ]\nHow do i start?"
         },
         {
           "role": "tutor",
@@ -647,7 +647,7 @@
         },
         {
           "role": "student",
-          "content": "So: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means x = 4"
+          "content": "[ answer ]\nSo: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means x = 4"
         }
       ],
       "student_state": {
@@ -667,7 +667,7 @@
         },
         {
           "role": "student",
-          "content": "im confused. where do i start?"
+          "content": "[ hint ]\nim confused. where do i start?"
         },
         {
           "role": "tutor",
@@ -675,7 +675,7 @@
         },
         {
           "role": "student",
-          "content": "OK. -2(a+b) = -2a - 2b\nso 4a+3b-2a-2b=2a+b\nso 2*12 + 9 = 33"
+          "content": "[ answer ]\nOK. -2(a+b) = -2a - 2b\nso 4a+3b-2a-2b=2a+b\nso 2*12 + 9 = 33"
         }
       ],
       "student_state": {
@@ -695,23 +695,23 @@
         },
         {
           "role": "student",
-          "content": "Is it 17.15 per large box, 3.08 per small box?"
+          "content": "[ answer ]\nIs it 17.15 per large box, 3.08 per small box?"
         },
         {
           "role": "tutor",
-          "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again"
+          "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again\n\n{ 'correct': false }"
         },
         {
           "role": "student",
-          "content": "so is it 17 per large box and 3 per small box?"
+          "content": "[ answer ]\nso is it 17 per large box and 3 per small box?"
         },
         {
           "role": "tutor",
-          "content": "That is incorrect. Re-read the question and try again"
+          "content": "That is incorrect. Re-read the question and try again\n\n{ 'correct': false }"
         },
         {
           "role": "student",
-          "content": "oops i didnt read the part abt the 2 samll boxes being empty properly. ok so it's: 16 per large box, 5 per small box"
+          "content": "[ answer ]\noops i didnt read the part abt the 2 samll boxes being empty properly. ok so it's: 16 per large box, 5 per small box"
         }
       ],
       "student_state": {
@@ -731,23 +731,23 @@
         },
         {
           "role": "student",
-          "content": "x=5, x=1"
+          "content": "[ answer ]\nx=5, x=1"
         },
         {
           "role": "tutor",
-          "content": "Incorrect. Try again"
+          "content": "Incorrect. Try again\n\n{ 'correct': false }"
         },
         {
           "role": "student",
-          "content": "x=-3, x=-2"
+          "content": "[ answer ]\nx=-3, x=-2"
         },
         {
           "role": "tutor",
-          "content": "Close but not quite. You can request a hint if you're stuck. Try again"
+          "content": "Close but not quite. You can request a hint if you're stuck. Try again\n\n{ 'correct': false }"
         },
         {
           "role": "student",
-          "content": "x=3,x=2"
+          "content": "[ answer ]x=3,x=2"
         }
       ],
       "student_state": {
