@@ -3,6 +3,7 @@ import json, random, sys, os, copy, re
 from pathlib import Path
 from typing import TypedDict
 from dotenv import load_dotenv
+from concurrent.futures import ThreadPoolExecutor
 
 rootDir = Path(__file__).resolve().parent.parent
 sys.path.append(str(rootDir))
@@ -252,7 +253,7 @@ def generateProbes(seeds: list[Seed]):
     sys.exit(1)
 
 def runDiscoveryPass():
-  # Runs probes through current CherryPi prompt
+  # Runs probes through current CherryPi prompt concurrently via multithreading
   # Clusters by symptom categories:
   # no_json_body - JSON body at end of response is omitted in a 'response' or 'skip' answer type
   # json_body_included - JSON body included for 'hint' answer type
@@ -277,7 +278,8 @@ def runDiscoveryPass():
     "no_json_body": { "count": 0, "items": [] },
     "json_body_included": { "count": 0, "items": [] },
     "schema_violation": { "count": 0, "items": [] },
-    "json_parse_error": { "count": 0, "items": [] }
+    "json_parse_error": { "count": 0, "items": [] },
+    "call_failed": { "count": 0, "items": [] }
   }
 
   try:
@@ -290,48 +292,24 @@ def runDiscoveryPass():
 
   print(f"Loaded {len(probes)} probes...\n")
 
-  for probe in probes:
-    topic, resType, itemId = probe["topic"], probe["response_type"], probe["item_id"]
-    print(f"Processing probe ({itemId})")
-    problem = probe["conversation"][0]["content"] if probe["conversation"] else []
-    systemPrompt = {
-      "role": "system",
-      "content": generateOriginalTutorSystemPrompt(topic, problem)
-    }
+  with ThreadPoolExecutor(max_workers=10) as executor:
+    executorRes = executor.map(processProbeHelper, probes)
 
-    response = queryLLM(DATASET_MODEL, [systemPrompt] + probe["conversation"])
+  for res in executorRes:
+    if len(res) == 0:
+      continue
 
-    print(f"Generated response: {response}")
-
-    match = re.search(JSON_REGEX, response)
-    if match == None and resType in ["answer", "skip"]:
-      result["no_json_body"]["count"] += 1
-      result["no_json_body"]["items"].append({ "item_id": itemId, "response": response })
-    elif match != None and resType in ["start", "hint"]:
-      result["json_body_included"]["count"] += 1
-      result["json_body_included"]["items"].append({ "item_id": itemId, "response": response })
-
-    try:
-      if match:
-        data = json.loads(match.group(0))
-        if resType == "answer":
-          if len(data) != 1 or "correct" not in data:
-            result["schema_violation"]["count"] += 1
-            result["schema_violation"]["items"].append({ "item_id": itemId, "response": response })
-        elif resType == "skip":
-          if len(data) != 1 or "new_question" not in data:
-            result["schema_violation"]["count"] += 1
-            result["schema_violation"]["items"].append({ "item_id": itemId, "response": response })
-    except json.JSONDecodeError as e:
-      result["json_parse_error"]["count"] += 1
-      result["json_parse_error"]["items"].append({ "item_id": itemId, "response": response })
+    for symptom in res:
+      error, itemId, response = symptom["error"], symptom["item_id"], symptom["response"]
+      result[error]["count"] += 1
+      result[error]["items"].append({ "item_id": itemId, "response": response })
 
   try:
-    with open("discovery_pass.json", "w", encoding="utf-8"):
+    with open("discovery_pass.json", "w", encoding="utf-8") as file:
       json.dump(result, file, indent=2)
     print("Finished. Wrote discovery pass results to discovery_pass.json")
   except OSError as e:
-    print(f"Failed to write to file 'discovyer_pass.json': {e}")
+    print(f"Failed to write to file 'discovery_pass.json': {e}")
     sys.exit(1)
 
 # ADVERSARIAL FUNCTIONS
@@ -397,6 +375,53 @@ def mutateAnswerHelper(problemText: str, answer: str):
     DATASET_MODEL,
     [{ "role": "system", "content": generateMutateAnswerPrompt(problemText, answer) }]
   )
+
+def processProbeHelper(probe):
+  # Runs probe through CherryPi prompt, returning an object array indicating the
+  # symptom categories detected in the response:
+  # no_json_body - JSON body at end of response is omitted in a 'response' or 'skip' answer type
+  # json_body_included - JSON body included for 'hint' answer type
+  # schema_violation - required fields are not present in JSON response
+  # json_parse_error - JSON at end of response does not match
+
+  # res = [{ "error": ("no_json_body"|"json_body_included"|"schema_violation"|"json_parse_error"|"call_failed"), item_id, response}, ...]
+  res = []
+
+  topic, resType, itemId = probe["topic"], probe["response_type"], probe["item_id"]
+  print(f"Processing probe ({itemId})")
+  problem = probe["conversation"][0]["content"] if probe["conversation"] else ""
+  systemPrompt = {
+    "role": "system",
+    "content": generateOriginalTutorSystemPrompt(topic, problem)
+  }
+
+  response = ""
+  try:
+    response = queryLLM(DATASET_MODEL, [systemPrompt] + probe["conversation"])
+  except Exception as e:
+    return [{ "error": "call_failed", "item_id": itemId, "response": e }]
+
+  print(f"Generated response: {response}")
+
+  match = re.search(JSON_REGEX, response)
+  if match == None and resType in ["answer", "skip"]:
+    res.append({ "error": "no_json_body", "item_id": itemId, "response": response })
+  elif match != None and resType in ["start", "hint"]:
+    res.append({ "error": "json_body_included", "item_id": itemId, "response": response })
+
+  try:
+    if match:
+      data = json.loads(match[0])
+      if resType == "answer":
+        if len(data) != 1 or "correct" not in data:
+          res.append({ "error": "schema_violation", "item_id": itemId, "response": response })
+      elif resType == "skip":
+        if len(data) != 1 or "new_question" not in data:
+          res.append({ "error": "schema_violation", "item_id": itemId, "response": response })
+  except json.JSONDecodeError as e:
+    res.append({ "error": "json_parse_error", "item_id": itemId, "response": response })
+
+  return res
 
 if __name__ == "__main__":
   if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes", "pass"]:
