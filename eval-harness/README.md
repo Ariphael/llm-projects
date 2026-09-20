@@ -3,3 +3,5 @@ The goal of this project is to evaluate the prompt, model and schema configurati
 
 # Background
 In the CherryPi pipeline, one core problem is multi-validity where most tasks have multiple valid answers. Instead of solely comparing output to expected value where applicable, we also need to check the properties that are satisfied on the output and utilise some quality signal such as an LLM judge or human review. Need a way to track how the results change if we vary the configuration (prompt+model+schema), primarily prompt.
+
+**Current status of project**: Designed the seed problems and implemented functionality to generate the dataset inputs. Currently debugging the discovery pass step which exists to find out what adversarials to include in the dataset inputs.
