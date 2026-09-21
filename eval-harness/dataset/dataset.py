@@ -275,7 +275,7 @@ def runDiscoveryPass():
   #    items: [list of { "item_id": str, "response": str }],
   # }
 
-  probes = {}
+  probes, seeds = [], []
   result = {
     "answer_leak": { "count": 0, "items": [] },
     "no_json_body": { "count": 0, "items": [] },
@@ -289,9 +289,20 @@ def runDiscoveryPass():
   }
 
   try:
+    seedsList, seedsMap = [], {}
     with open("probes.json", "r", encoding="utf-8") as file:
       probes = json.load(file)
       probes = probes["probes"]
+
+    with open("seeds.json", "r", encoding="utf-8") as file:
+      seedsList = json.load(file)
+      seedsList = seedsList["seeds"]
+
+    for seed in seedsList:
+      seedsMap[seed["topic"]] = seed
+
+    for probe in probes:
+      seeds.append(seedsMap[probe["topic"]])
   except OSError:
     print("Error: File 'probes.json' is missing. Generate probes first using 'python dataset.py probes'")
     sys.exit(1)
@@ -299,7 +310,7 @@ def runDiscoveryPass():
   print(f"Loaded {len(probes)} probes...\n")
 
   with ThreadPoolExecutor(max_workers=10) as executor:
-    executorRes = executor.map(processProbeHelper, probes)
+    executorRes = executor.map(processProbeHelper, probes, seeds)
 
   for res, log in executorRes:
     logJson["log"].extend(log)
@@ -409,7 +420,7 @@ def answerLeakJudgeHelper(problemText: str, tutorResponse: str, knownAnswer: str
   return None
 
 
-def processProbeHelper(probe):
+def processProbeHelper(probe, seed):
   # Runs probe through CherryPi prompt, returning an object array indicating the
   # symptom categories detected in the response:
   # no_json_body - JSON body at end of response is omitted in a 'response' or 'skip' answer type
@@ -458,18 +469,7 @@ def processProbeHelper(probe):
     res.append({ "error": "json_parse_error", "item_id": itemId, "response": response })
 
   if resType == "hint":
-    seeds = []
-    try:
-      with open("seeds.json", "r", encoding="utf-8") as file:
-        seeds = json.load(file)["seeds"]
-    except OSError:
-      print("Error: File 'seeds.json' is missing.")
-      return (res, log)
-
-    isCorrectSeed = lambda seed, topic: seed["topic"] == topic
-    seedMatches = [s for s in seeds if isCorrectSeed(s, topic)]
-    knownAnswer = seedMatches[0]["known_answer"]
-
+    knownAnswer = seed["known_answer"]
     problemText = probe["conversation"][0]["content"]
 
     judge = answerLeakJudgeHelper(problemText, response, knownAnswer)
