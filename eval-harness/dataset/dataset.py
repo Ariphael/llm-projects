@@ -284,6 +284,9 @@ def runDiscoveryPass():
     "json_parse_error": { "count": 0, "items": [] },
     "call_failed": { "count": 0, "items": [] }
   }
+  logJson = {
+    "log": []
+  }
 
   try:
     with open("probes.json", "r", encoding="utf-8") as file:
@@ -298,7 +301,9 @@ def runDiscoveryPass():
   with ThreadPoolExecutor(max_workers=10) as executor:
     executorRes = executor.map(processProbeHelper, probes)
 
-  for res in executorRes:
+  for res, log in executorRes:
+    logJson["log"].extend(log)
+
     if len(res) == 0:
       continue
 
@@ -310,6 +315,8 @@ def runDiscoveryPass():
   try:
     with open("discovery_pass.json", "w", encoding="utf-8") as file:
       json.dump(result, file, indent=2)
+    with open("discovery_pass_log.json", "w", encoding="utf-8") as file:
+      json.dump(logJson, file, indent=2)
     print("Finished. Wrote discovery pass results to discovery_pass.json")
   except OSError as e:
     print(f"Failed to write to file 'discovery_pass.json': {e}")
@@ -411,7 +418,8 @@ def processProbeHelper(probe):
   # json_parse_error - JSON at end of response does not match
 
   # res = [{ "error": ("no_json_body"|"json_body_included"|"schema_violation"|"json_parse_error"|"call_failed"|"answer_leak"), item_id, response, explanation? }, ...]
-  res = []
+  # log = [item_id, response, explanation?]
+  res, log = [], []
 
   topic, resType, itemId = probe["topic"], probe["response_type"], probe["item_id"]
   print(f"Processing probe ({itemId})")
@@ -425,9 +433,11 @@ def processProbeHelper(probe):
   try:
     response = queryLLM(DATASET_MODEL, [systemPrompt] + probe["conversation"])
   except Exception as e:
-    return [{ "error": "call_failed", "item_id": itemId, "response": e }]
+    return ([{ "error": "call_failed", "item_id": itemId, "response": str(e) }], log)
 
   print(f"Generated response: {response}")
+
+  log.append({ "item_id": itemId, "response": response })
 
   match = re.search(JSON_REGEX, response)
   if match == None and resType in ["answer", "skip"]:
@@ -454,7 +464,7 @@ def processProbeHelper(probe):
         seeds = json.load(file)["seeds"]
     except OSError:
       print("Error: File 'seeds.json' is missing.")
-      return res
+      return (res, log)
 
     isCorrectSeed = lambda seed, topic: seed["topic"] == topic
     seedMatches = [s for s in seeds if isCorrectSeed(s, topic)]
@@ -463,10 +473,12 @@ def processProbeHelper(probe):
     problemText = probe["conversation"][0]["content"]
 
     judge = answerLeakJudgeHelper(problemText, response, knownAnswer)
-    if not judge or judge["answer_leak"] == True:
+    if not judge or "answer_leak" not in judge or "explanation" not in judge:
+      res.append({ "error": "judge_failed", "item_id": itemId, "response": response })
+    elif judge["answer_leak"] == True:
       res.append({ "error": "answer_leak", "item_id": itemId, "response": response, "explanation": judge["explanation"]})
 
-  return res
+  return (res, log)
 
 if __name__ == "__main__":
   if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes", "pass"]:
