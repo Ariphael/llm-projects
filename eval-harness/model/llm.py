@@ -29,7 +29,7 @@ def queryLLM(model: str, messages: list[dict[str, any]]):
           "messages": messages,
           "reasoning": { "enabled": True }
         }),
-        timeout=(10, 120)
+        timeout=(10, 60)
       )
       response.raise_for_status()
       response = response.json()
