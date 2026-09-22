@@ -37,7 +37,9 @@ def generateHintProbeJudgePrompt(problemText: str, tutorResponse: str, knownAnsw
     "answer_leak property is true if the hint reveals the final answer or makes it trivially readable off the text. "
     "explanation property includes text that explains which part of the hint leaks the answer.\n\n"
     "This JSON must be the only thing in your response. Escape newlines, quotes, and backslashes inside string values correctly. "
-    "Property names are enclosed in double quotes. No markdown permitted."
+    "Property names are enclosed in double quotes. No markdown permitted. No surrounding the JSON with markdown. "
+    "Do not surround the JSON you generate with ```json ```. If you're prepending any character with a backslash and it's not "
+    "a valid JSON escape sequence, then do \\\\[chr] instead of \\[chr]"
   )
 
 # def generateConversationSystemPrompt(seed: Seed, scenario: dict):
