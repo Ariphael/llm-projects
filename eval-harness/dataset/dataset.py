@@ -108,9 +108,9 @@ ARITHMETIC_REGEX = r"[a-zA-Z0-9_().\s]+[+\-*/=][a-zA-Z0-9_().\s]*=[a-zA-Z0-9_().
 MATH_UNIT_REGEX = r"(?:\d+(?:\.\d+)?|(?<![A-Za-z])[A-Za-z](?![A-Za-z])|[-+*/^()])"
 MATH_SIDE_REGEX = rf"{MATH_UNIT_REGEX}(?:\s*{MATH_UNIT_REGEX})*"
 MATH_EXPRESSION_REGEX = rf"({MATH_SIDE_REGEX}(?:\s*=\s*{MATH_SIDE_REGEX})+)"
-JSON_REGEX = r"\{.*\}$"
+JSON_REGEX = r"\{\s*\".*\":.*\}$"
 
-DATASET_MODEL_MAX_RETRIES = 5
+DATASET_MODEL_MAX_RETRIES = 4
 
 def generateInputs(seeds: list[Seed]):
   """Creates file inputs.json containing inputs with conversation left for the user to fill. Pairs seed problems with applicable scenarios and derives student_state deterministically."""
@@ -404,17 +404,46 @@ def backoff(timeout):
 def answerLeakJudgeHelper(problemText: str, tutorResponse: str, knownAnswer: str):
   attempt, timeout = 0, 2
 
+  conversation = [{
+    "role": "system",
+    "content": generateHintProbeJudgePrompt(problemText, tutorResponse, knownAnswer)
+  }]
+
   while attempt < DATASET_MODEL_MAX_RETRIES:
     try:
-      response = queryLLM(
-        DATASET_MODEL,
-        [{ "role": "system", "content": generateHintProbeJudgePrompt(problemText, tutorResponse, knownAnswer) }]
-      )
+      response = queryLLM(DATASET_MODEL, conversation)
+      conversation.append({
+        "role": "assistant",
+        "content": response
+      })
+      response = re.search(JSON_REGEX, response)[0]
       response = json.loads(response)
       return response
     except json.JSONDecodeError as e:
+      print(f"Hint judge JSON error: {str(e)}")
+      print(f"Hint judge response: {response}")
       attempt += 1
       timeout = backoff(timeout)
+      conversation.append({
+        "role": "user",
+        "content": (
+          f"The JSON you generated resulted in a JSONDecodeError exception. This is the error: {str(e)}.\n"
+          "Please regenerate following the system prompt"
+        )
+      })
+      continue
+    except TypeError as e:
+      print(f"Hint judge type error: {str(e)}")
+      print(f"Hint judge response: {response}")
+      attempt += 1
+      timeout = backoff(timeout)
+      conversation.append({
+        "role": "user",
+        "content": (
+          f"The JSON you generated resulted in a TypeError. This is the error: {str(e)}.\n"
+          "Please regenerate following the system prompt"
+        )
+      })
       continue
 
   return None
@@ -450,7 +479,7 @@ def processProbeHelper(probe, seed):
 
   log.append({ "item_id": itemId, "response": response })
 
-  match = re.search(JSON_REGEX, response)
+  match = re.search(JSON_REGEX, response, re.DOTALL)
   if match == None and resType in ["answer", "skip"]:
     res.append({ "error": "no_json_body", "item_id": itemId, "response": response })
   elif match != None and resType in ["start", "hint"]:
@@ -469,14 +498,19 @@ def processProbeHelper(probe, seed):
     res.append({ "error": "json_parse_error", "item_id": itemId, "response": response })
 
   if resType == "hint":
-    knownAnswer = seed["known_answer"]
-    problemText = probe["conversation"][0]["content"]
+    try:
+      knownAnswer = seed["known_answer"]
+      problemText = probe["conversation"][0]["content"]
 
-    judge = answerLeakJudgeHelper(problemText, response, knownAnswer)
-    if not judge or "answer_leak" not in judge or "explanation" not in judge:
+      judge = answerLeakJudgeHelper(problemText, response, knownAnswer)
+      if not judge or "answer_leak" not in judge or "explanation" not in judge:
+        res.append({ "error": "judge_failed", "item_id": itemId, "response": response })
+      elif judge["answer_leak"] == True:
+        res.append({ "error": "answer_leak", "item_id": itemId, "response": response, "explanation": judge["explanation"]})
+    except Exception as e:
+      print(f"An exception was raised while processing a hint probe: {str(e)}")
+      print("Item was added to the 'judge_failed' bucket which can be inspected in the 'discovery_pass.json' file")
       res.append({ "error": "judge_failed", "item_id": itemId, "response": response })
-    elif judge["answer_leak"] == True:
-      res.append({ "error": "answer_leak", "item_id": itemId, "response": response, "explanation": judge["explanation"]})
 
   return (res, log)
 
