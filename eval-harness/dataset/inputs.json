@@ -106,11 +106,11 @@
       "topic": "percentages",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -125,11 +125,11 @@
       "topic": "ratios",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -144,11 +144,11 @@
       "topic": "probability",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A bag has 5 red marbles, 3 blue marbles, and 2 green marbles. If you close your eyes and pick one marble out of the bag, what is the probability that you will pick a blue marble? Write your answer as a fraction."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -163,11 +163,11 @@
       "topic": "algebraic",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -182,11 +182,11 @@
       "topic": "linear",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -201,11 +201,11 @@
       "topic": "exponents_and_square_roots",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Find the value of the following expression:\\(2^{3}+\\sqrt{25}\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -220,11 +220,11 @@
       "topic": "inequalities",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -239,11 +239,11 @@
       "topic": "simultaneous",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -258,11 +258,11 @@
       "topic": "trigonometry",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A vertical flagpole stands on top of a hill. The hill itself forms a perfect \\(15^{\\circ }\\) angle with the flat, horizontal ground. At a specific time of day, the sun hits the flagpole, casting a shadow straight down the slope of the hill. The length of this shadow along the hill's slope is exactly 20 meters. At that exact same moment, the angle of elevation from the horizontal at the very tip of the shadow looking up to the top of the flagpole is \\(45^{\\circ }\\). Find the height of the flagpole rounded to 2 decimal places."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -277,11 +277,11 @@
       "topic": "quadratics",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ skip question ]"
         }
       ],
@@ -296,11 +296,11 @@
       "topic": "quadratics",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\ni have no idea where to start"
         }
       ],
@@ -315,11 +315,11 @@
       "topic": "linear",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nwhere do i start?"
         }
       ],
@@ -334,11 +334,11 @@
       "topic": "inequalities",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nI don't understand the question"
         }
       ],
@@ -353,11 +353,11 @@
       "topic": "ratios",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nI'm stuck. Do I plus or multiply to solve this?"
         }
       ],
@@ -372,19 +372,19 @@
       "topic": "algebraic",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\n1533"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Your answer is not quite correct. Try again\n\n{ 'correct': false }"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nhow do i approach this?"
         }
       ],
@@ -399,19 +399,19 @@
       "topic": "simultaneous",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\n17.15 per large box and 3.08 per small box"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Your answer is incorrect. Try again"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nHow do I solve this?"
         }
       ],
@@ -426,19 +426,19 @@
       "topic": "percentages",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\n$2.72"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Your answer is not quite correct. Read the question and then try again"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nhelp im stuck"
         }
       ],
@@ -453,19 +453,19 @@
       "topic": "quadratics",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nI would like a hint"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Consider the rule for factorising quadratic equations. What two numbers add to -5, and multiply to 6?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nwait why do they have to add to -5? i dont get where the adding part comes from"
         }
       ],
@@ -480,19 +480,19 @@
       "topic": "linear",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\ni need some help. How do i get x on one side without making sign errors?"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Try expanding the brackets that are multiplied by -2 and 3 first. What do you notice about the equation after this?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nwait does -2(x-3) become -2x-6 or -2x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
         }
       ],
@@ -507,19 +507,19 @@
       "topic": "algebraic",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\ni'm stuck where do I begin?"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "The expression has a bracket multiplied by -2 - what has to happen to that bracket before you can combine anything?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nwait so do i multiply the -2 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
         }
       ],
@@ -534,11 +534,11 @@
       "topic": "quadratics",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nx = -3, x = -2"
         }
       ],
@@ -554,11 +554,11 @@
       "topic": "simultaneous",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\n17.15 per large box, 3.08 per small box"
         }
       ],
@@ -574,11 +574,11 @@
       "topic": "inequalities",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nc=3 ?"
         }
       ],
@@ -594,11 +594,11 @@
       "topic": "ratios",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\n6"
         }
       ],
@@ -614,11 +614,11 @@
       "topic": "percentages",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\n$4.08"
         }
       ],
@@ -634,19 +634,19 @@
       "topic": "linear",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nHow do i start?"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Start by expanding the brackets that are multiplied by -2 and 3"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nSo: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means x = 4"
         }
       ],
@@ -662,19 +662,19 @@
       "topic": "algebraic",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ hint ]\nim confused. where do i start?"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Try expanding the bracket multiplied by -2 first"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nOK. -2(a+b) = -2a - 2b\nso 4a+3b-2a-2b=2a+b\nso 2*12 + 9 = 33"
         }
       ],
@@ -690,27 +690,27 @@
       "topic": "simultaneous",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nIs it 17.15 per large box, 3.08 per small box?"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again\n\n{ 'correct': false }"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nso is it 17 per large box and 3 per small box?"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "That is incorrect. Re-read the question and try again\n\n{ 'correct': false }"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\noops i didnt read the part abt the 2 samll boxes being empty properly. ok so it's: 16 per large box, 5 per small box"
         }
       ],
@@ -726,33 +726,2499 @@
       "topic": "quadratics",
       "conversation": [
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nx=5, x=1"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Incorrect. Try again\n\n{ 'correct': false }"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]\nx=-3, x=-2"
         },
         {
-          "role": "tutor",
+          "role": "assistant",
           "content": "Close but not quite. You can request a hint if you're stuck. Try again\n\n{ 'correct': false }"
         },
         {
-          "role": "student",
+          "role": "user",
           "content": "[ answer ]x=3,x=2"
         }
       ],
       "student_state": {
         "attempts": 3,
         "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "hint-quadratics-first_hint-empty",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-quadratics-first_hint-padded",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni have no idea where to start"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-linear-first_hint-empty",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-linear-first_hint-padded",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwhere do i start?"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-inequalities-first_hint-empty",
+      "response_type": "hint",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-inequalities-first_hint-padded",
+      "response_type": "hint",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nI don't understand the question"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-ratios-first_hint-empty",
+      "response_type": "hint",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-ratios-first_hint-padded",
+      "response_type": "hint",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nI'm stuck. Do I plus or multiply to solve this?"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-algebraic-hint_after_attempt-latex",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$1533$"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nhow do i approach this?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-algebraic-hint_after_attempt-empty",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n1533"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-algebraic-hint_after_attempt-padded",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n1533"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nhow do i approach this?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-simultaneous-hint_after_attempt-latex",
+      "response_type": "hint",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$17$.$15$ per large box and $3$.$08$ per small box"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is incorrect. Try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nHow do I solve this?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-simultaneous-hint_after_attempt-empty",
+      "response_type": "hint",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n17.15 per large box and 3.08 per small box"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is incorrect. Try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-simultaneous-hint_after_attempt-padded",
+      "response_type": "hint",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n17.15 per large box and 3.08 per small box"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is incorrect. Try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nHow do I solve this?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-percentages-hint_after_attempt-latex",
+      "response_type": "hint",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$$2$.$72$"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Read the question and then try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nhelp im stuck"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-percentages-hint_after_attempt-unicode",
+      "response_type": "hint",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n\uff042.72"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Read the question and then try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nhelp im stuck"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-percentages-hint_after_attempt-empty",
+      "response_type": "hint",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$2.72"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Read the question and then try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      }
+    },
+    {
+      "item_id": "hint-percentages-hint_after_attempt-padded",
+      "response_type": "hint",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$2.72"
+        },
+        {
+          "role": "assistant",
+          "content": "Your answer is not quite correct. Read the question and then try again"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nhelp im stuck"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      }
+    },
+    {
+      "item_id": "hint-quadratics-second_hint-latex",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nI would like a hint"
+        },
+        {
+          "role": "assistant",
+          "content": "Consider the rule for factorising quadratic equations. What two numbers add to -5, and multiply to 6?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait why do they have to add to -$5$? i dont get where the adding part comes from"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-quadratics-second_hint-unicode",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nI would like a hint"
+        },
+        {
+          "role": "assistant",
+          "content": "Consider the rule for factorising quadratic equations. What two numbers add to -5, and multiply to 6?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait why do they have to add to \u20135? i dont get where the adding part comes from"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-quadratics-second_hint-empty",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nI would like a hint"
+        },
+        {
+          "role": "assistant",
+          "content": "Consider the rule for factorising quadratic equations. What two numbers add to -5, and multiply to 6?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-quadratics-second_hint-padded",
+      "response_type": "hint",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nI would like a hint"
+        },
+        {
+          "role": "assistant",
+          "content": "Consider the rule for factorising quadratic equations. What two numbers add to -5, and multiply to 6?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait why do they have to add to -5? i dont get where the adding part comes from"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 7
+      }
+    },
+    {
+      "item_id": "hint-linear-second_hint-latex",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni need some help. How do i get x on one side without making sign errors?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the brackets that are multiplied by -2 and 3 first. What do you notice about the equation after this?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait does -$2$(x-$3$) become -$2$x-$6$ or -$2$x+$6$? the negative on the outside is confusing me and idk what im supposed to notice after"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-linear-second_hint-unicode",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni need some help. How do i get x on one side without making sign errors?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the brackets that are multiplied by -2 and 3 first. What do you notice about the equation after this?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait does \u20132(x\u20133) become \u20132x\u20136 or \u20132x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-linear-second_hint-empty",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni need some help. How do i get x on one side without making sign errors?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the brackets that are multiplied by -2 and 3 first. What do you notice about the equation after this?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-linear-second_hint-padded",
+      "response_type": "hint",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni need some help. How do i get x on one side without making sign errors?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the brackets that are multiplied by -2 and 3 first. What do you notice about the equation after this?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait does -2(x-3) become -2x-6 or -2x+6? the negative on the outside is confusing me and idk what im supposed to notice after"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 7
+      }
+    },
+    {
+      "item_id": "hint-algebraic-second_hint-latex",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni'm stuck where do I begin?"
+        },
+        {
+          "role": "assistant",
+          "content": "The expression has a bracket multiplied by -2 - what has to happen to that bracket before you can combine anything?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait so do i multiply the -$2$ by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-algebraic-second_hint-unicode",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni'm stuck where do I begin?"
+        },
+        {
+          "role": "assistant",
+          "content": "The expression has a bracket multiplied by -2 - what has to happen to that bracket before you can combine anything?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait so do i multiply the \u20132 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-algebraic-second_hint-empty",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni'm stuck where do I begin?"
+        },
+        {
+          "role": "assistant",
+          "content": "The expression has a bracket multiplied by -2 - what has to happen to that bracket before you can combine anything?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 1
+      }
+    },
+    {
+      "item_id": "hint-algebraic-second_hint-padded",
+      "response_type": "hint",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ni'm stuck where do I begin?"
+        },
+        {
+          "role": "assistant",
+          "content": "The expression has a bracket multiplied by -2 - what has to happen to that bracket before you can combine anything?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nwait so do i multiply the -2 by both things in the bracket? Or just the a? Not sure what you mean by what has to happen to it"
+        }
+      ],
+      "student_state": {
+        "attempts": 0,
+        "hints_used": 7
+      }
+    },
+    {
+      "item_id": "answer-quadratics-wrong_no_hints-latex",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$x=3$, $x=2$"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-quadratics-wrong_no_hints-unicode",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx \uff1d \u20133, x \uff1d \u20132"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-quadratics-wrong_no_hints-empty",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-quadratics-wrong_no_hints-padded",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx = -3, x = -2"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-simultaneous-wrong_no_hints-latex",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$17$.$15$ per large box, $3$.$08$ per small box"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-simultaneous-wrong_no_hints-empty",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-simultaneous-wrong_no_hints-padded",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n17.15 per large box, 3.08 per small box"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-inequalities-wrong_no_hints-latex",
+      "response_type": "answer",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$c=3$ ?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-inequalities-wrong_no_hints-unicode",
+      "response_type": "answer",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nc\uff1d3 ?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-inequalities-wrong_no_hints-empty",
+      "response_type": "answer",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-inequalities-wrong_no_hints-padded",
+      "response_type": "answer",
+      "topic": "inequalities",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Richard has $25 to spend at the book fair. Each comic book costs $4. He also wants to buy a poster for $9. Write and solve an inequality to find the maximum number of comic books (\\(c\\)) Richard can buy."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nc=3 ?"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-ratios-right_no_hints-latex",
+      "response_type": "answer",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$6$"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-ratios-right_no_hints-empty",
+      "response_type": "answer",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-ratios-right_no_hints-padded",
+      "response_type": "answer",
+      "topic": "ratios",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A recipe for a batch of chocolate chip cookies requires 3 cups of flour for every 2 cups of chocolate chips. If James wants to make a giant batch of cookies using 9 cups of flour, how many cups of chocolate chips will he need?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n6"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-percentages-right_no_hints-latex",
+      "response_type": "answer",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$$4$.$08$"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-percentages-right_no_hints-unicode",
+      "response_type": "answer",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n\uff044.08"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-percentages-right_no_hints-empty",
+      "response_type": "answer",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-percentages-right_no_hints-padded",
+      "response_type": "answer",
+      "topic": "percentages",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A box of cupcakes sold by a bakery cost $3.40. Due to the increased costs involved with running a bakery, the owner has decided to increase the price of everything sold by 20%. How much will a box of cupcakes cost once the price has been increased?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$4.08"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 6
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-linear-after_one_hint-latex",
+      "response_type": "answer",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nHow do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Start by expanding the brackets that are multiplied by -2 and 3"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nSo: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means $x = 4$"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-linear-after_one_hint-unicode",
+      "response_type": "answer",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nHow do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Start by expanding the brackets that are multiplied by -2 and 3"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nSo: 4 \u2013 2x + 3 \uff1d 6 \u2013 3x + 5\nThen: 7 + x \uff1d 11\nwhich means x \uff1d 4"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-linear-after_one_hint-empty",
+      "response_type": "answer",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nHow do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Start by expanding the brackets that are multiplied by -2 and 3"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-linear-after_one_hint-padded",
+      "response_type": "answer",
+      "topic": "linear",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "\\(4 - 2(x - 3) = 3(2 - x) + 5\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nHow do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Start by expanding the brackets that are multiplied by -2 and 3"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nSo: 4 - 2x + 3 = 6 - 3x + 5\nThen: 7 + x = 11\nwhich means x = 4"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 7
+      },
+      "student_answer_correct": false
+    },
+    {
+      "item_id": "answer-algebraic-after_one_hint-unicode",
+      "response_type": "answer",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nim confused. where do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the bracket multiplied by -2 first"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nOK. \u20132(a+b) \uff1d \u20132a \u2013 2b\nso 4a+3b\u20132a\u20132b\uff1d2a+b\nso 2*12 + 9 \uff1d 33"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-algebraic-after_one_hint-empty",
+      "response_type": "answer",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nim confused. where do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the bracket multiplied by -2 first"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 1
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-algebraic-after_one_hint-padded",
+      "response_type": "answer",
+      "topic": "algebraic",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Simplify this expression first, and then find its final value when a = 12 and b = 9:\\(4a+3b-2(a+b)\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nim confused. where do i start?"
+        },
+        {
+          "role": "assistant",
+          "content": "Try expanding the bracket multiplied by -2 first"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nOK. -2(a+b) = -2a - 2b\nso 4a+3b-2a-2b=2a+b\nso 2*12 + 9 = 33"
+        }
+      ],
+      "student_state": {
+        "attempts": 1,
+        "hints_used": 7
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-simultaneous-after_many_attempts-latex",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nIs it $17$.$15$ per large box, $3$.$08$ per small box?"
+        },
+        {
+          "role": "assistant",
+          "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nso is it $17$ per large box and $3$ per small box?"
+        },
+        {
+          "role": "assistant",
+          "content": "That is incorrect. Re-read the question and try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\noops i didnt read the part abt the $2$ samll boxes being empty properly. ok so it's: $16$ per large box, $5$ per small box"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-simultaneous-after_many_attempts-empty",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nIs it 17.15 per large box, 3.08 per small box?"
+        },
+        {
+          "role": "assistant",
+          "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nso is it 17 per large box and 3 per small box?"
+        },
+        {
+          "role": "assistant",
+          "content": "That is incorrect. Re-read the question and try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-simultaneous-after_many_attempts-padded",
+      "response_type": "answer",
+      "topic": "simultaneous",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "A local bakery delivers boxes of pastries to nearby cafes. On Monday, the bakery delivers 5 large boxes and 3 small boxes, which contain a total of 95 pastries. On Tuesday, they deliver 3 large boxes and 7 small boxes. However, the delivery driver notices that 2 of the small boxes were completely empty due to a packaging error. The total number of pastries delivered on Tuesday was 73. Find the exact number of pastries that fit into a single large box and a single small box."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nIs it 17.15 per large box, 3.08 per small box?"
+        },
+        {
+          "role": "assistant",
+          "content": "Not quite. You can't have 0.15 or 0.08 pastries. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nso is it 17 per large box and 3 per small box?"
+        },
+        {
+          "role": "assistant",
+          "content": "That is incorrect. Re-read the question and try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\noops i didnt read the part abt the 2 samll boxes being empty properly. ok so it's: 16 per large box, 5 per small box"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 6
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-quadratics-after_many_attempts-latex",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$x=5$, $x=1$"
+        },
+        {
+          "role": "assistant",
+          "content": "Incorrect. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\n$x=3$, $x=2$"
+        },
+        {
+          "role": "assistant",
+          "content": "Close but not quite. You can request a hint if you're stuck. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]$x=3$, $x=2$"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-quadratics-after_many_attempts-unicode",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx\uff1d5, x\uff1d1"
+        },
+        {
+          "role": "assistant",
+          "content": "Incorrect. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx\uff1d\u20133, x\uff1d\u20132"
+        },
+        {
+          "role": "assistant",
+          "content": "Close but not quite. You can request a hint if you're stuck. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]x\uff1d3,x\uff1d2"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-quadratics-after_many_attempts-empty",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx=5, x=1"
+        },
+        {
+          "role": "assistant",
+          "content": "Incorrect. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx=-3, x=-2"
+        },
+        {
+          "role": "assistant",
+          "content": "Close but not quite. You can request a hint if you're stuck. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 0
+      },
+      "student_answer_correct": true
+    },
+    {
+      "item_id": "answer-quadratics-after_many_attempts-padded",
+      "response_type": "answer",
+      "topic": "quadratics",
+      "conversation": [
+        {
+          "role": "assistant",
+          "content": "Solve the following quadratic equation for \\(x\\):\\(x^{2}-5x+6=0\\)"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\nok"
+        },
+        {
+          "role": "assistant",
+          "content": "Take your time."
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ncan you explain that again?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure \u2014 which part would you like me to go over?"
+        },
+        {
+          "role": "user",
+          "content": "[ hint ]\ngot it, thanks"
+        },
+        {
+          "role": "assistant",
+          "content": "Great. Let's keep going."
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx=5, x=1"
+        },
+        {
+          "role": "assistant",
+          "content": "Incorrect. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]\nx=-3, x=-2"
+        },
+        {
+          "role": "assistant",
+          "content": "Close but not quite. You can request a hint if you're stuck. Try again\n\n{ 'correct': false }"
+        },
+        {
+          "role": "user",
+          "content": "[ answer ]x=3,x=2"
+        }
+      ],
+      "student_state": {
+        "attempts": 3,
+        "hints_used": 6
       },
       "student_answer_correct": true
     }
