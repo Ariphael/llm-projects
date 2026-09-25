@@ -92,7 +92,9 @@ UNICODE_MAP = {
   ">=": "≥",
   "sqrt": "√",
   "^2": "²",
-  "-": "–"
+  "-": "–",
+  "$": "＄",
+  "=": "＝"
 }
 
 FILLER_PAIRS = [
@@ -140,7 +142,7 @@ def generateInputs(seeds: list[Seed]):
         conversation.append({ "role": "user", "content": "[ skip question ]"})
 
       for _ in range(scenario["state"]["attempts"]):
-        conversation.append({ "role": "user", "content": None})
+        conversation.append({ "role": "user", "content": f"[ {rtype} ]\n" })
 
       itemId = f"{rtype}-{seed}-{scenarioName}"
 
@@ -167,6 +169,50 @@ def generateInputs(seeds: list[Seed]):
 
   with open("inputs.json", "w", encoding="utf-8") as file:
     json.dump(data, file, indent=2)
+
+def generatePerturbations():
+  inputs = {}
+  try:
+    with open("inputs.json", "r", encoding="utf-8") as file:
+      inputs = { "inputs": json.load(file)["inputs"] }
+  except FileNotFoundError as _:
+    print(
+      "No 'inputs.json' file exists, please generate the dataset first with 'python dataset.py inputs' then "
+      "fill in the empty conversations by hand."
+    )
+    return
+
+  if len(inputs) == 0:
+    print(
+      "No dataset inputs found, please generate the dataset first with 'python dataset.py inputs' then "
+      "fill in the empty conversations by hand."
+    )
+    return
+
+  perturbations = []
+  for inp in inputs["inputs"]:
+    if re.search(r"-(empty|unicode|latex|padded)$", inp["item_id"]) != None:
+      print("Perturbations have already been applied to dataset.")
+      return
+    if inp["response_type"] in ["start", "skip"]:
+      continue
+    pertLatexItem, replCount = injectLatex(inp)
+    if replCount > 0:
+      perturbations.append(pertLatexItem)
+
+    pertUnicodeItem, replCount = injectUnicode(inp)
+    if replCount > 0:
+      perturbations.append(pertUnicodeItem)
+
+    perturbations.append(empty(inp))
+    perturbations.append(pad(inp))
+
+  inputs["inputs"].extend(perturbations)
+
+  with open("inputs.json", "w", encoding="utf-8") as file:
+    json.dump(inputs, file, indent=2)
+
+  print(f"Finished. Appended {len(perturbations)} perturbations to the dataset")
 
 def generateProbes(seeds: list[Seed]):
   data = { "probes": [] }
@@ -341,9 +387,9 @@ def injectLatex(item):
   for turn in new["conversation"]:
     if turn["role"] == "user":
       before = turn["content"]
-      if re.search(r"^x ?= ?[0-9], ?x ?= ?[0-9]$", turn["content"]):
+      if re.search(r"x ?= ?-?[0-9], ?x ?= ?-?[0-9]", turn["content"]):
         turn["content"] = \
-          re.sub(r"^x ?= ?([0-9]), ?x ?= ?([0-9])$", r"$x=\1$, $x=\2$", turn["content"])
+          re.sub(r"x ?= ?-?([0-9]), ?x ?= ?-?([0-9])", r"$x=\1$, $x=\2$", turn["content"])
       elif re.search(MATH_EXPRESSION_REGEX, turn["content"]):
         for expression in re.split(MATH_EXPRESSION_REGEX, turn["content"]):
           if "=" in expression:
@@ -385,6 +431,7 @@ def pad(item, pairs=6):
   filler = []
   for i in range(pairs):
     filler.extend(FILLER_PAIRS[i % len(FILLER_PAIRS)])
+  new["student_state"]["hints_used"] += pairs
   new["conversation"] = new["conversation"][:1] + filler + new["conversation"][1:]
   new["item_id"] = item["item_id"] + "-padded"
   return new
@@ -515,13 +562,15 @@ def processProbeHelper(probe, seed):
   return (res, log)
 
 if __name__ == "__main__":
-  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "probes", "pass"]:
+  if len(sys.argv) != 2 or sys.argv[1] not in ["inputs", "perts", "probes", "pass"]:
     print("Usage: python dataset.py [inputs|probes|pass]")
     sys.exit(1)
 
   with open("seeds.json", "r", encoding="utf-8") as file:
     if sys.argv[1] == "inputs":
       generateInputs(json.load(file)["seeds"])
+    elif sys.argv[1] == "perts":
+      generatePerturbations()
     elif sys.argv[1] == "probes":
       generateProbes(json.load(file)["seeds"])
     elif sys.argv[1] == "pass":
