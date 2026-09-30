@@ -46,3 +46,85 @@ def generateOriginalTutorSystemPrompt(topic: str, problem: str):
     f"Topic: {topic}\n"
     f"Problem: {problem}"
   )
+
+def generateAnswerLeakCheckPrompt(problemText: str, tutorResponse: str, knownAnswer: str):
+  return (
+    "Does this hint reveal or state the specific final answer?\n"
+    f"Original problem text: {problemText}\n"
+    f"Known answer: {knownAnswer}\n"
+    f"Hint: {tutorResponse}\n\n"
+    "Provide your answer in JSON: {\"answer_leak\": true|false}\n"
+    "answer_leak property is true if the answer to the above question is yes.\n"
+    "This JSON must be the only thing in your response. Property names are enclosed in double quotes. No markdown permited. "
+    "No surrounding the JSON with markdown. "
+    "Do not surround the JSON you generate with ```json ```."
+  )
+
+def generateJudgePrompt(problemText: str, conversation: str, knownAnswer: str):
+  return (
+    "Your task is to assign a numeric score (between 1 to 3) representing the quality of a tutor's response. "
+    "You will be provided the original problem text, the known answer, the conversation in JSON (with the "
+    "last entry being the tutor's response) and a rubric which tell you specifically what it means to assign "
+    "a score of 1, 2 or 3 for different scenarios.\n"
+    "You must provide your response in JSON: { \"score\": 1|2|3 }\n"
+    "This JSON must be the only thing in your response. Property names are enclosed in double quotes. No markdown permitted. "
+    "No surrounding the JSON with markdown. No surrounding the JSON with ```json ```.\n\n"
+    f"Original problem text: {problemText}\n",
+    f"Known answer: {knownAnswer}\n"
+    f"Conversation: {conversation}\n\n"
+    "CONTEXT:\n"
+    "The tutor provides 4 types of responses: start, answer, hint, skip\n"
+    "The tutor begins the session with a start-type response introducing the problem. "
+    "For each student attempt, the tutor replies with an answer-type response including whether the student is correct and a possible hint. "
+    "For each hint request, the tutor replies with a hint-type response. The student can request to skip the current active question and "
+    "the tutor replies by generating a new question that is of the same topic as the original problem.\n"
+    "For answer (student correct) and skip responses, the tutor ends their response with a JSON block containing a new question. This, "
+    "and any JSON block the tutor generates at the end of their response, is not shown to the student."
+    "RUBRIC:\n"
+    "Case: (start type, empty conversation)\n"
+    "\t3 = introduces the problem accurately and in a comprehensible way\n"
+    "\t2 = introduces the problem accurately, but in a way that might cause some confusion.\n"
+    "\t1 = does not introduce the problem at all, or the problem introduced does not match the semantics/details of the original problem text"
+    " or the problem is introduced in a substantially unclear/confusing way \n\n"
+    "Case: (answer type, tutor classifies student's answer as correct)\n"
+    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible "
+    "and clear way\n"
+    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
+    "confusing way\n"
+    "\t1 = The above statements evaluate to false OR the student's answer is incorrect\n\n"
+    "Case: (answer type, tutor classifies student's answer as incorrect)\n"
+    "\t3 = names the specific step or misconception that produced the wrong answer "
+    "(e.g. \"check how -2 multiplies the -3 inside the bracket\")\n"
+    "\t2 = locates the error region but not the error (\"recheck your expansion\")\n"
+    "\t1 = generic (\"not correct, try again\"), OR the student's response is correct\n\n"
+    "Case: (skip type)\n"
+    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible and "
+    "clear way\n"
+    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
+    "confusing way\n"
+    "\t1 = The above statements evaluate to false\n\n"
+    "Case: (hint type)\n"
+    "\t3 = gives an actionable next step, is mathematically correct and addresses the student's actual sticking point "
+    "if one exists\n"
+    "\t2 = gives a scaffold or a potentially confusing/non-actionable next step and partially addresses the student's actual "
+    "sticking point if one exists\n"
+    "\t1 = is mathematically inaccurate, is incomprehensible or provides the direct answer, OR does not address the actual student's "
+    "sticking point at all\n"
+  )
+
+
+
+def generateHintProbeJudgePrompt(problemText: str, tutorResponse: str, knownAnswer: str):
+  return (
+    "Does this hint reveal or state the specific final answer?\n"
+    f"Original problem text: {problemText}\n"
+    f"Known answer: {knownAnswer}\n"
+    f"Hint: {tutorResponse}\n\n"
+    "Provide your answer in JSON: {\"answer_leak\": true|false, \"explanation\": \"...\"}\n"
+    "answer_leak property is true if the hint reveals the final answer or makes it trivially readable off the text. "
+    "explanation property includes text that explains which part of the hint leaks the answer.\n\n"
+    "This JSON must be the only thing in your response. Escape newlines, quotes, and backslashes inside string values correctly. "
+    "Property names are enclosed in double quotes. No markdown permitted. No surrounding the JSON with markdown. "
+    "Do not surround the JSON you generate with ```json ```. If you're prepending any character with a backslash and it's not "
+    "a valid JSON escape sequence, then do \\\\[chr] instead of \\[chr]"
+  )
