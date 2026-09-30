@@ -37,7 +37,6 @@ For 'start' response types:
 The system will prepend the student's response with one of:
 [ answer ], [ hint ] or [ skip question ]
 Which is how the response type is indicated for the current turn.
-If the student's answer is empty or contains no attempt, tell them you didn't receive an answer and invite them to try, then end with { "correct": false } as usual.
 The JSON blocks at the end of answer/hint response types must be the last thing in your reply - nothing after.
 Each JSON block must be valid JSON. Escape newlines, quotes, and backslashes inside string values correctly. Property names are enclosed in double quotes. No markdown permitted.
 
