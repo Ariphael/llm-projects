@@ -112,8 +112,6 @@ def generateJudgePrompt(problemText: str, conversation: str, knownAnswer: str):
     "sticking point at all\n"
   )
 
-
-
 def generateHintProbeJudgePrompt(problemText: str, tutorResponse: str, knownAnswer: str):
   return (
     "Does this hint reveal or state the specific final answer?\n"
