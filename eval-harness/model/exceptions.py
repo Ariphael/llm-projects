@@ -9,3 +9,11 @@ class LLMQueryClientError(Exception):
 class LLMNoContentGenerated(Exception):
   """Exception raised when the LLM does not generate any content"""
   pass
+
+class JudgePromptJSONOmissionError(Exception):
+  """Exception raised when the JSON body is missing at the end of an answer-type response"""
+  pass
+
+class JudgePromptJSONParseError(Exception):
+  """Exception raised when the judge prompt generator cannot parse the JSON at the end of an answer-type response"""
+  pass
