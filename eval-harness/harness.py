@@ -84,10 +84,10 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
       knownAnswer = seedsHash[input["topic"]]["known_answer"]
       response = queryLLM(model, [{ "role": "system", "content": cleanedPrompt }] + conversation)
 
-      if len(conversation) != 0 and not conversation[-1]["content"].startswith("[ hint ]"):
+      if len(conversation) != 0 and not conversation[-2]["content"].startswith("[ hint ]"):
         score["json_parses"] = jsonParses(response)
         score["schema_valid"] = False if not score["json_parses"] else schemaValid(conversation, response)
-      elif len(conversation) != 0 and conversation[-1]["content"].startswith("[ hint ]"):
+      elif len(conversation) != 0 and conversation[-2]["content"].startswith("[ hint ]"):
         score["answer_leak"] = answerLeak(problemText, response, knownAnswer)
       score["quality"] = getScore(conversation, response, problemText, knownAnswer)
 
@@ -145,7 +145,7 @@ def jsonParses(llmResponse: str):
 
 def schemaValid(conversation, llmResponse: str):
   # Pre-condition: conversation is non-empty AND llmResponse is a non 'hint'-type response
-  if conversation[-1]["content"].startswith("[ answer ]"):
+  if conversation[-2]["content"].startswith("[ answer ]"):
     matches = re.search(JSON_REGEX, llmResponse)
     if not matches:
       return False
@@ -177,19 +177,18 @@ def answerLeak(problemText: str, llmResponse: str, knownAnswer: str):
   return False
 
 def getScore(conversation, llmResponse: str, problemText: str, knownAnswer: str):
-  prompt = generateJudgePrompt(
-    problemText,
-    conversation + [{ "role": "assistant", "content": llmResponse }],
-    knownAnswer
-  )
-
   attempts, timeout = 0, 2
   while attempts < SCORER_MAX_ATTEMPTS:
     try:
+      prompt = generateJudgePrompt(
+        problemText,
+        conversation + [{ "role": "assistant", "content": llmResponse }],
+        knownAnswer
+      )
       response = queryLLM(DATASET_MODEL, [{ "role": "system", "content": prompt }])
       resJson = json.loads(response)
       return resJson["score"]
-    except json.JSONDecodeError as e:
+    except Exception as e:
       print(
         f"Scorer failed: {e}\nOriginal response: {llmResponse}\nRetrying in {timeout} sesconds..."
       )
