@@ -1,3 +1,51 @@
+import re, json
+
+from exceptions import JudgePromptJSONParseError, JudgePromptJSONOmissionError
+
+JSON_REGEX = r"\{\s*\".*\":.*\}$"
+
+RUBRIC_MAP = {
+  "start": (
+    "Case - (start type, the first tutor turn)"
+    "\t3 = introduces the problem accurately and in a comprehensible way\n"
+    "\t2 = introduces the problem accurately, but in a way that might cause some confusion.\n"
+    "\t1 = does not introduce the problem at all, or the problem introduced does not match the semantics/details of the original problem text"
+    " or the problem is introduced in a substantially unclear/confusing way \n\n"
+  ),
+  "answer_correct": (
+    "Case - (answer type, student marked correct)"
+    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible "
+    "and clear way\n"
+    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
+    "confusing way\n"
+    "\t1 = The above statements evaluate to false OR the student's answer is incorrect\n\n"
+  ),
+  "answer_incorrect": (
+    "Case - (answer type, student marked incorrect)"
+    "\t3 = names the specific step or misconception that produced the wrong answer "
+    "(e.g. \"check how -2 multiplies the -3 inside the bracket\")\n"
+    "\t2 = locates the error region but not the error (\"recheck your expansion\")\n"
+    "\t1 = generic (\"not correct, try again\"), OR the student's response is correct\n\n"
+  ),
+  "skip": (
+    "Case - (skip type)"
+    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible and "
+    "clear way\n"
+    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
+    "confusing way\n"
+    "\t1 = The above statements evaluate to false\n\n"
+  ),
+  "hint": (
+    "Case - (hint type)"
+    "\t3 = gives an actionable next step, is mathematically correct and addresses the student's actual sticking point "
+    "if one exists\n"
+    "\t2 = gives a scaffold or a potentially confusing/non-actionable next step and partially addresses the student's actual "
+    "sticking point if one exists\n"
+    "\t1 = is mathematically inaccurate, is incomprehensible or provides the direct answer, OR does not address the actual student's "
+    "sticking point at all\n"
+  )
+}
+
 def generateOriginalTutorSystemPrompt(topic: str, problem: str):
   return (
     "You are an AI Math tutor focused on grades 1-12. Your goal is to guide the student through math "
@@ -60,18 +108,18 @@ def generateAnswerLeakCheckPrompt(problemText: str, tutorResponse: str, knownAns
     "Do not surround the JSON you generate with ```json ```."
   )
 
-def generateJudgePrompt(problemText: str, conversation: str, knownAnswer: str):
-  return (
+def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], knownAnswer: str):
+  prompt = (
     "Your task is to assign a numeric score (between 1 to 3) representing the quality of a tutor's response. "
     "You will be provided the original problem text, the known answer, the conversation in JSON (with the "
-    "last entry being the tutor's response) and a rubric which tell you specifically what it means to assign "
-    "a score of 1, 2 or 3 for different scenarios.\n"
+    "last entry being the tutor's response) and a rubric which tells you specifically what it means to assign "
+    "a score of 1, 2 or 3 to the tutor's respons\n"
     "You must provide your response in JSON: { \"score\": 1|2|3 }\n"
     "This JSON must be the only thing in your response. Property names are enclosed in double quotes. No markdown permitted. "
     "No surrounding the JSON with markdown. No surrounding the JSON with ```json ```.\n\n"
-    f"Original problem text: {problemText}\n",
+    f"Original problem text: {problemText}\n"
     f"Known answer: {knownAnswer}\n"
-    f"Conversation: {conversation}\n\n"
+    f"Conversation: {str(conversation)}\n\n"
     "CONTEXT:\n"
     "The tutor provides 4 types of responses: start, answer, hint, skip\n"
     "The tutor begins the session with a start-type response introducing the problem. "
@@ -79,38 +127,31 @@ def generateJudgePrompt(problemText: str, conversation: str, knownAnswer: str):
     "For each hint request, the tutor replies with a hint-type response. The student can request to skip the current active question and "
     "the tutor replies by generating a new question that is of the same topic as the original problem.\n"
     "For answer (student correct) and skip responses, the tutor ends their response with a JSON block containing a new question. This, "
-    "and any JSON block the tutor generates at the end of their response, is not shown to the student."
+    "and any JSON block the tutor generates at the end of their response, is not shown to the student.\n"
+    "The type of the tutor's response will be specified.\n\n"
     "RUBRIC:\n"
-    "Case: (start type, empty conversation)\n"
-    "\t3 = introduces the problem accurately and in a comprehensible way\n"
-    "\t2 = introduces the problem accurately, but in a way that might cause some confusion.\n"
-    "\t1 = does not introduce the problem at all, or the problem introduced does not match the semantics/details of the original problem text"
-    " or the problem is introduced in a substantially unclear/confusing way \n\n"
-    "Case: (answer type, tutor classifies student's answer as correct)\n"
-    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible "
-    "and clear way\n"
-    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
-    "confusing way\n"
-    "\t1 = The above statements evaluate to false OR the student's answer is incorrect\n\n"
-    "Case: (answer type, tutor classifies student's answer as incorrect)\n"
-    "\t3 = names the specific step or misconception that produced the wrong answer "
-    "(e.g. \"check how -2 multiplies the -3 inside the bracket\")\n"
-    "\t2 = locates the error region but not the error (\"recheck your expansion\")\n"
-    "\t1 = generic (\"not correct, try again\"), OR the student's response is correct\n\n"
-    "Case: (skip type)\n"
-    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible and "
-    "clear way\n"
-    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
-    "confusing way\n"
-    "\t1 = The above statements evaluate to false\n\n"
-    "Case: (hint type)\n"
-    "\t3 = gives an actionable next step, is mathematically correct and addresses the student's actual sticking point "
-    "if one exists\n"
-    "\t2 = gives a scaffold or a potentially confusing/non-actionable next step and partially addresses the student's actual "
-    "sticking point if one exists\n"
-    "\t1 = is mathematically inaccurate, is incomprehensible or provides the direct answer, OR does not address the actual student's "
-    "sticking point at all\n"
   )
+
+  if len(conversation) == 1:
+    prompt += RUBRIC_MAP["start"]
+  elif conversation[-2]["content"].startswith("[ hint ]"):
+    prompt += RUBRIC_MAP["hint"]
+  elif conversation[-2]["content"].startswith("[ skip question ]"):
+    prompt += RUBRIC_MAP["skip"]
+  elif conversation[-2]["content"].startswith("[ answer ]"):
+    matches = re.search(JSON_REGEX, conversation[-1]["content"])
+    if not matches:
+      raise JudgePromptJSONOmissionError()
+
+    try:
+      jsonBody = json.loads(matches[0])
+      prompt += RUBRIC_MAP["answer_correct" if jsonBody["correct"] else "answer_incorrect"]
+    except json.JSONDecodeError as e:
+      print(f"Error: Cannot decode JSON at the end of the tutor's response - \"{matches[0]}\"")
+      print(f"Exception: {str(e)}")
+      raise JudgePromptJSONParseError()
+
+  return prompt
 
 def generateHintProbeJudgePrompt(problemText: str, tutorResponse: str, knownAnswer: str):
   return (
