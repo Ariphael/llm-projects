@@ -17,3 +17,7 @@ class JudgePromptJSONOmissionError(Exception):
 class JudgePromptJSONParseError(Exception):
   """Exception raised when the judge prompt generator cannot parse the JSON at the end of an answer-type response"""
   pass
+
+class UnknownResponseType(Exception):
+  """Exception raised when the 'responseType' field of a dataset item is not one of 'start'|'skip'|'answer'|'hint'"""
+  pass
