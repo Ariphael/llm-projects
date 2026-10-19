@@ -1,48 +1,47 @@
 import re, json
 
-from exceptions import JudgePromptJSONParseError, JudgePromptJSONOmissionError
+from exceptions import JudgePromptJSONParseError, JudgePromptJSONOmissionError, UnknownResponseType
 
 JSON_REGEX = r"\{\s*\".*\":.*\}$"
 
 RUBRIC_MAP = {
   "start": (
-    "Case - (start type, the first tutor turn)"
-    "\t3 = introduces the problem accurately and in a comprehensible way\n"
-    "\t2 = introduces the problem accurately, but in a way that might cause some confusion.\n"
-    "\t1 = does not introduce the problem at all, or the problem introduced does not match the semantics/details of the original problem text"
-    " or the problem is introduced in a substantially unclear/confusing way \n\n"
+    "Case - (start type, the first tutor turn)\n"
+    "\t3 = introduces the problem preserving the exact semantics/details of the original problem text; introduces the problem in a clear way\n"
+    "\t2 = at most one of the above conditions are not satisfied\n"
+    "\t1 = all of the conditions above are not satisfied\n\n"
   ),
   "answer_correct": (
-    "Case - (answer type, student marked correct)"
-    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible "
-    "and clear way\n"
-    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
-    "confusing way\n"
-    "\t1 = The above statements evaluate to false OR the student's answer is incorrect\n\n"
+    "Case - (answer type, student marked correct)\n"
+    "\t3 = new question matches the JSON block, is on topic and is well-posed and solvable (e.g., (topic: algebraic) - "
+    "Simplify the expression \\\\(5x + 2y - 3(x - y)\\\\), then find its value when x = 4 and y = 6. {\"new_question\": \"[same q]\"})\n"
+    "\t2 = at most two of the above conditions are not satisfied\n"
+    "\t1 = none of the conditions above are satisfied\n"
+    "\tN/A = the student's answer is incorrect\n\n"
   ),
   "answer_incorrect": (
-    "Case - (answer type, student marked incorrect)"
+    "Case - (answer type, student marked incorrect)\n"
     "\t3 = names the specific step or misconception that produced the wrong answer "
     "(e.g. \"check how -2 multiplies the -3 inside the bracket\")\n"
     "\t2 = locates the error region but not the error (\"recheck your expansion\")\n"
-    "\t1 = generic (\"not correct, try again\"), OR the student's response is correct\n\n"
+    "\t1 = generic (\"not correct, try again\")\n"
+    "\tN/A = the student's answer is correct\n\n"
   ),
   "skip": (
-    "Case - (skip type)"
-    "\t3 = new question introduced matches question in the JSON block, is of the same topic and introduced in a comprehensible and "
-    "clear way\n"
-    "\t2 = new question introduced is of the same topic but does not match new question in the JSON block OR introduced in a potentially "
-    "confusing way\n"
-    "\t1 = The above statements evaluate to false\n\n"
+    "Case - (skip type)\n"
+    "\t3 = new question matches the JSON block, is on topic and is well-posed and solvable (e.g., (topic: algebraic) - "
+    "Simplify the expression \\\\(5x + 2y - 3(x - y)\\\\), then find its value when x = 4 and y = 6. {\"new_question\": \"[same q]\"})\n"
+    "\t2 = at most two of the above conditions are not satisfied\n"
+    "\t1 = none of the conditions above are satisfied\n\n"
   ),
   "hint": (
-    "Case - (hint type)"
-    "\t3 = gives an actionable next step, is mathematically correct and addresses the student's actual sticking point "
-    "if one exists\n"
-    "\t2 = gives a scaffold or a potentially confusing/non-actionable next step and partially addresses the student's actual "
-    "sticking point if one exists\n"
-    "\t1 = is mathematically inaccurate, is incomprehensible or provides the direct answer, OR does not address the actual student's "
-    "sticking point at all\n"
+    "Case - (hint type)\n"
+    "\t3 = directly addresses the student's stated confusion (e.g., explains that expanding (x+p)(x+q) "
+    "gives x² + (p+q)x + pq, so p+q must equal -5)\n"
+    "\t2 = acknowledges the confusion but only restates the instruction in other words, without explaining why (e.g., "
+    "\"we need numbers that expand to 6 and -5\"\n"
+    "\t1 = ignores the stated confusion or moves on to a different hint\n"
+    "\tN/A = the student's last turn contains no specific question or confusion\n\n"
   )
 }
 
@@ -108,18 +107,18 @@ def generateAnswerLeakCheckPrompt(problemText: str, tutorResponse: str, knownAns
     "Do not surround the JSON you generate with ```json ```."
   )
 
-def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], knownAnswer: str):
+def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], responseType: str, knownAnswer: str):
   prompt = (
     "Your task is to assign a numeric score (between 1 to 3) representing the quality of a tutor's response. "
     "You will be provided the original problem text, the known answer, the conversation in JSON (with the "
     "last entry being the tutor's response) and a rubric which tells you specifically what it means to assign "
     "a score of 1, 2 or 3 to the tutor's respons\n"
-    "You must provide your response in JSON: { \"score\": 1|2|3 }\n"
+    "You must provide your response in JSON: { \"score\": 1|2|3|\"N/A\" }\n"
     "This JSON must be the only thing in your response. Property names are enclosed in double quotes. No markdown permitted. "
     "No surrounding the JSON with markdown. No surrounding the JSON with ```json ```.\n\n"
     f"Original problem text: {problemText}\n"
     f"Known answer: {knownAnswer}\n"
-    f"Conversation: {str(conversation)}\n\n"
+    f"Conversation: {json.dumps(conversation, ensure_ascii=False)}\n\n"
     "CONTEXT:\n"
     "The tutor provides 4 types of responses: start, answer, hint, skip\n"
     "The tutor begins the session with a start-type response introducing the problem. "
@@ -132,13 +131,13 @@ def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], kn
     "RUBRIC:\n"
   )
 
-  if len(conversation) == 1:
+  if responseType == "start":
     prompt += RUBRIC_MAP["start"]
-  elif conversation[-2]["content"].startswith("[ hint ]"):
+  elif responseType == "hint":
     prompt += RUBRIC_MAP["hint"]
-  elif conversation[-2]["content"].startswith("[ skip question ]"):
+  elif responseType == "skip":
     prompt += RUBRIC_MAP["skip"]
-  elif conversation[-2]["content"].startswith("[ answer ]"):
+  elif responseType == "answer":
     matches = re.search(JSON_REGEX, conversation[-1]["content"])
     if not matches:
       raise JudgePromptJSONOmissionError()
@@ -150,6 +149,11 @@ def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], kn
       print(f"Error: Cannot decode JSON at the end of the tutor's response - \"{matches[0]}\"")
       print(f"Exception: {str(e)}")
       raise JudgePromptJSONParseError()
+  else:
+    print(
+      f"Unknown response type: {responseType}\nResponse type must be one of 'start'|'skip'|'answer'|'hint'"
+    )
+    raise UnknownResponseType()
 
   return prompt
 
