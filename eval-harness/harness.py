@@ -5,7 +5,8 @@ from datetime import date, datetime, timezone
 from dotenv import load_dotenv
 
 from model.llm import queryLLM
-from model.prompts import generateAnswerLeakCheckPrompt, generateJudgePrompt
+from model.prompts import generateAnswerLeakCheckPrompt, generateJudgePrompt, generateCorrectnessCheckPrompt
+from model.exceptions import JudgePromptJSONOmissionError, JudgePromptJSONParseError
 
 load_dotenv()
 
@@ -83,13 +84,26 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
       problemText = seedsHash[input["topic"]]["problem_text"]
       knownAnswer = seedsHash[input["topic"]]["known_answer"]
       response = queryLLM(model, [{ "role": "system", "content": cleanedPrompt }] + conversation)
+      responseType = input["response_type"]
+      conversation += [{ "role": "assistant", "content": response }]
 
-      if len(conversation) != 0 and not conversation[-2]["content"].startswith("[ hint ]"):
+      if responseType == "answer":
+        parses = jsonParses(response)
+        schemaValid = False if not score["json_parses"] else schemaValid(conversation, response)
+
+        if parses and schemaValid:
+          if not getCorrectness(conversation, input):
+            score = { "error": "misgraded", "response": response }
+        else:
+          score = { "json_parses": parses, "schema_valid": schemaValid }
+      elif responseType == "skip":
         score["json_parses"] = jsonParses(response)
         score["schema_valid"] = False if not score["json_parses"] else schemaValid(conversation, response)
-      elif len(conversation) != 0 and conversation[-2]["content"].startswith("[ hint ]"):
+      elif responseType == "hint":
         score["answer_leak"] = answerLeak(problemText, response, knownAnswer)
-      score["quality"] = getScore(conversation, response, problemText, knownAnswer)
+
+      if not "error" in score:
+        score["quality"] = getScore(conversation, problemText, responseType, knownAnswer)
 
       result["scores"].append(score)
 
@@ -176,21 +190,50 @@ def answerLeak(problemText: str, llmResponse: str, knownAnswer: str):
 
   return False
 
-def getScore(conversation, llmResponse: str, problemText: str, knownAnswer: str):
+def getCorrectness(conversation, input):
+  llmResponse = conversation[-1]["content"]
+  llmJsonMatch = re.search(JSON_REGEX, llmResponse)
+
+  try:
+    llmJson = json.loads(llmJsonMatch[0])
+    return llmJson["correct"] == input["student_answer_correct"]
+  except json.JSONDecodeError as e:
+    print(f"Unable to decode JSON: {llmJsonMatch[0]}")
+    print(f"Error: {e}")
+    raise json.JSONDecodeError(e.msg, e.doc, e.pos)
+
+def getScore(conversation, problemText: str, responseType: str, knownAnswer: str):
   attempts, timeout = 0, 2
+  llmResponse = conversation[-1]["content"]
+
   while attempts < SCORER_MAX_ATTEMPTS:
     try:
       prompt = generateJudgePrompt(
         problemText,
-        conversation + [{ "role": "assistant", "content": llmResponse }],
+        conversation,
+        responseType,
         knownAnswer
       )
       response = queryLLM(DATASET_MODEL, [{ "role": "system", "content": prompt }])
       resJson = json.loads(response)
       return resJson["score"]
+    except JudgePromptJSONParseError as e:
+      print(f"Failed to parse JSON at end of LLM response")
+      print(f"LLM response: {llmResponse}")
+      print(f"Error: {e}\nRetrying in {timeout} seconds...")
+      timeout = _backoff(timeout)
+      attempts += 1
+      print(f"Retrying ({attempts}/{SCORER_MAX_ATTEMPTS})...")
+    except JudgePromptJSONOmissionError as e:
+      print(f"JSON body missing at end of LLM response: {e}")
+      print(f"LLM response: {llmResponse}")
+      print(f"Error: {e}\nRetrying in {timeout} seconds...")
+      timeout = _backoff(timeout)
+      attempts += 1
+      print(f"Retrying ({attempts}/{SCORER_MAX_ATTEMPTS})...")
     except Exception as e:
       print(
-        f"Scorer failed: {e}\nOriginal response: {llmResponse}\nRetrying in {timeout} sesconds..."
+        f"Scorer failed: {e}\nLLM response: {llmResponse}\nRetrying in {timeout} sesconds..."
       )
       timeout = _backoff(timeout)
       attempts += 1
