@@ -1,6 +1,6 @@
 import re, json
 
-from exceptions import JudgePromptJSONParseError, JudgePromptJSONOmissionError, UnknownResponseType
+from .exceptions import JudgePromptJSONParseError, JudgePromptJSONOmissionError, UnknownResponseType
 
 JSON_REGEX = r"\{\s*\".*\":.*\}$"
 
