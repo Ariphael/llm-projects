@@ -5,7 +5,7 @@ from datetime import date, datetime, timezone
 from dotenv import load_dotenv
 
 from model.llm import queryLLM
-from model.prompts import generateAnswerLeakCheckPrompt, generateJudgePrompt, generateCorrectnessCheckPrompt
+from model.prompts import generateAnswerLeakCheckPrompt, generateJudgePrompt
 from model.exceptions import JudgePromptJSONOmissionError, JudgePromptJSONParseError
 
 load_dotenv()
@@ -26,6 +26,8 @@ def _backoff(timeout):
   return timeout * 2
 
 def executeRun(inputs, seeds, promptVersion, model, reps=5):
+  print(f"Found {len(seeds)} seed(s) and {len(inputs)} input(s)")
+  print("Processing seeds...")
   seedsHash = {}
   for seed in seeds:
     seedsHash[seed["topic"]] = seed
@@ -36,6 +38,8 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
       f"Error: Invalid prompt version name {promptVersion}. Ensure prompt version exists in the 'prompts/' directory as {promptVersion}.txt"
     )
     return
+
+  print(f"Found prompt file {promptVersion}.txt")
 
   prompt = (PROMPTS_DIR_PATH / f"{promptVersion}.txt").read_text()
   cleanedPrompt = re.sub(r"# ?v[0-9]+:.*", "", prompt)
@@ -65,6 +69,7 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
   }
 
   for input in inputs:
+    print(f"Processing item {input["item_id"]}...")
     startTime = time.perf_counter()
     formattedDate = date.today().strftime("%Y-%m-%d")
     conversation = input["conversation"]
@@ -79,17 +84,21 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
       "timestamp": ""
     }
 
-    for _ in range(reps):
+    print("Running scorer...")
+    for i in range(reps):
+      print(f"rep {i}/{reps}")
       score = {}
       problemText = seedsHash[input["topic"]]["problem_text"]
       knownAnswer = seedsHash[input["topic"]]["known_answer"]
+      cleanedPrompt = cleanedPrompt.replace("{topic}", f"{input["topic"]}")
+      cleanedPrompt = cleanedPrompt.replace("{problem}", f"{problemText}")
       response = queryLLM(model, [{ "role": "system", "content": cleanedPrompt }] + conversation)
       responseType = input["response_type"]
       conversation += [{ "role": "assistant", "content": response }]
 
       if responseType == "answer":
         parses = jsonParses(response)
-        schemaValid = False if not score["json_parses"] else schemaValid(conversation, response)
+        schemaValid = False if not parses else isSchemaValid(response, responseType)
 
         if parses and schemaValid:
           if not getCorrectness(conversation, input):
@@ -98,7 +107,7 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
           score = { "json_parses": parses, "schema_valid": schemaValid }
       elif responseType == "skip":
         score["json_parses"] = jsonParses(response)
-        score["schema_valid"] = False if not score["json_parses"] else schemaValid(conversation, response)
+        score["schema_valid"] = False if not score["json_parses"] else isSchemaValid(response, responseType)
       elif responseType == "hint":
         score["answer_leak"] = answerLeak(problemText, response, knownAnswer)
 
@@ -113,7 +122,9 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
     elapsedTime = time.perf_counter() - startTime
     result["latency_ms"] = f"{elapsedTime * 1000:.3f}"
     run["results"].append(result)
+    print(f"Result: {result}\n")
 
+  print("Finished. Generating metadata...")
   for rowIdx, result in enumerate(run["results"]):
     passCount = 0
     for rep in result["scores"]:
@@ -121,7 +132,7 @@ def executeRun(inputs, seeds, promptVersion, model, reps=5):
         ("json_parses" not in rep or rep["json_parses"])
         and ("schema_valid" not in rep or rep["schema_valid"])
         and ("answer_leak" not in rep or not rep["answer_leak"])
-        and rep["score"] >= 3
+        and (isinstance(rep["score"], int) and rep["score"] >= 3)
       ):
         run["metadata"]["per_rep_pass_rate"] += 1
         passCount += 1
@@ -157,19 +168,24 @@ def jsonParses(llmResponse: str):
     print(f"LLM generated JSON could not be decoded: {matches[0]}")
     return False
 
-def schemaValid(conversation, llmResponse: str):
-  # Pre-condition: conversation is non-empty AND llmResponse is a non 'hint'-type response
-  if conversation[-2]["content"].startswith("[ answer ]"):
-    matches = re.search(JSON_REGEX, llmResponse)
-    if not matches:
-      return False
+def isSchemaValid(llmResponse: str, responseType: str):
+  if responseType not in ["answer", "skip"]:
+    return True
 
-    try:
-      resJson = json.loads(matches[0])
-      return ["correct", "new_question"] in resJson and len(resJson) == 2
-    except json.JSONDecodeError as e:
-      print(f"LLM generated JSON could not be decoded: {matches[0]}")
-      return False
+  matches = re.search(JSON_REGEX, llmResponse)
+  if not matches:
+    return False
+
+  try:
+    resJson: dict = json.loads(matches[0])
+    if responseType == "answer":
+      return set(["correct", "new_question"]) == set(resJson)
+    elif responseType == "skip":
+      return set(["new_question"]) == set(resJson)
+  except json.JSONDecodeError as e:
+    print(f"LLM generated JSON could not be decoded: {matches[0]}")
+    print(f"Error: {e}")
+    return False
 
 def answerLeak(problemText: str, llmResponse: str, knownAnswer: str):
   prompt = generateAnswerLeakCheckPrompt(problemText, llmResponse, knownAnswer)
@@ -264,4 +280,4 @@ if __name__ == "__main__":
       inputs, seeds = json.load(inputsFile), json.load(seedsFile)
       promptVersion, model = sys.argv[3], sys.argv[5]
       reps = sys.argv[7] if len(sys.argv) == 8 and sys.argv[6] == "--rep" else 5
-      executeRun(inputs, seeds, promptVersion, model, reps)
+      executeRun(inputs["inputs"], seeds["seeds"], promptVersion, model, reps)
