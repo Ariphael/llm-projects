@@ -8,40 +8,49 @@ RUBRIC_MAP = {
   "start": (
     "Case - (start type, the first tutor turn)\n"
     "\t3 = introduces the problem preserving the exact semantics/details of the original problem text; introduces the problem in a clear way\n"
-    "\t2 = at most one of the above conditions are not satisfied\n"
-    "\t1 = all of the conditions above are not satisfied\n\n"
+    "\t2 = introduces the problem preserving the exact semantics/details of the original problem text; DOES NOT introduce the problem in a "
+    "clear way (Note: the clarity condition fails if the problem buries the question, omits constraints, uses vague metaphors, or hides the "
+    "variable(s), for example \"Considering how some amounts grow when paired with a fixed offset, what specific point balances out when "
+    "you scale it up to fifteen?\"\n"
+    "\t1 = fidelity condition in 3 and 2 fails\n\n"
   ),
   "answer_correct": (
     "Case - (answer type, student marked correct)\n"
     "\t3 = new question matches the JSON block, is on topic and is well-posed and solvable (e.g., (topic: algebraic) - "
-    "Simplify the expression \\\\(5x + 2y - 3(x - y)\\\\), then find its value when x = 4 and y = 6. {\"new_question\": \"[same q]\"})\n"
-    "\t2 = at most two of the above conditions are not satisfied\n"
-    "\t1 = none of the conditions above are satisfied\n"
-    "\tN/A = the student's answer is incorrect\n\n"
+    "Simplify the expression \\(5x + 2y - 3(x - y)\\), then find its value when x = 4 and y = 6. {\"new_question\": \"[same q]\"})\n"
+    "\t2 = matches JSON block, is on-topic and solvable BUT not well-posed (Note: the well-posed condition fails if the problem buries "
+    "the question, omits constraints, uses vague metaphors, or hides the variable(s), for example \"Considering how some amounts "
+    "grow when paired with a fixed offset, what specific point balances out when you scale it up to fifteen?\")\n"
+    "\t1 = fails above conditions\n\n"
   ),
   "answer_incorrect": (
     "Case - (answer type, student marked incorrect)\n"
     "\t3 = names the specific step or misconception that produced the wrong answer "
     "(e.g. \"check how -2 multiplies the -3 inside the bracket\")\n"
     "\t2 = locates the error region but not the error (\"recheck your expansion\")\n"
-    "\t1 = generic (\"not correct, try again\")\n"
-    "\tN/A = the student's answer is correct\n\n"
+    "\t1 = generic (\"not correct, try again\")\n\n"
   ),
   "skip": (
     "Case - (skip type)\n"
     "\t3 = new question matches the JSON block, is on topic and is well-posed and solvable (e.g., (topic: algebraic) - "
-    "Simplify the expression \\\\(5x + 2y - 3(x - y)\\\\), then find its value when x = 4 and y = 6. {\"new_question\": \"[same q]\"})\n"
-    "\t2 = at most two of the above conditions are not satisfied\n"
-    "\t1 = none of the conditions above are satisfied\n\n"
+    "Simplify the expression \\(5x + 2y - 3(x - y)\\), then find its value when x = 4 and y = 6. {\"new_question\": \"[same q]\"})\n"
+    "\t2 = new question matches JSON block, is on-topic and is solvable BUT is not well-posed (Note: the well-posed condition fails "
+    "if the problem buries the question, omits constraints, uses vague metaphors, or hides the variable(s), for "
+    "example \"Considering how some amounts grow when paired with a fixed offset, what specific point balances out "
+    "when you scale it up to fifteen?\")\n"
+    "\t1 = fails above conditions\n\n"
   ),
   "hint": (
     "Case - (hint type)\n"
     "\t3 = directly addresses the student's stated confusion (e.g., explains that expanding (x+p)(x+q) "
-    "gives x² + (p+q)x + pq, so p+q must equal -5)\n"
-    "\t2 = acknowledges the confusion but only restates the instruction in other words, without explaining why (e.g., "
-    "\"we need numbers that expand to 6 and -5\"\n"
-    "\t1 = ignores the stated confusion or moves on to a different hint\n"
-    "\tN/A = the student's last turn contains no specific question or confusion\n\n"
+    "gives x² + (p+q)x + pq, so p+q must equal -5), is mathematically correct and actionable (an actionable hint looks like "
+    "\"we need numbers that multiply to 6 and add to -5\")\n"
+    "\t2 = is mathematically correct and (is non-actionable or makes no attempt to acknowledge the confusion)"
+    "\t1 = fails the above conditions\n"
+    "\n\nIF the student only sent '[ hint ]' or there's no stated confusion, THEN ignore the above rubric and use this:\n"
+    "\t3 = is mathematically correct and actionable\n"
+    "\t2 = is mathematically correct and non-actionable \n"
+    "\t1 = is mathematically incorrect\n\n"
   )
 }
 
@@ -109,15 +118,17 @@ def generateAnswerLeakCheckPrompt(problemText: str, tutorResponse: str, knownAns
 
 def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], responseType: str, knownAnswer: str):
   prompt = (
-    "Your task is to assign a numeric score (between 1 to 3) representing the quality of a tutor's response. "
+    "Your task is to assign a numeric score (between 1 to 3) representing the quality of a tutor's response and write a short rationale "
+    "on the assignment.\n"
     "You will be provided the original problem text, the known answer, the conversation in JSON (with the "
-    "last entry being the tutor's response) and a rubric which tells you specifically what it means to assign "
-    "a score of 1, 2 or 3 to the tutor's respons\n"
-    "You must provide your response in JSON: { \"score\": 1|2|3|\"N/A\" }\n"
+    "last entry being the tutor's response), the response type and a rubric which tells you specifically what it means to assign "
+    "a score of 1, 2 or 3 to the tutor's response\n"
+    "You must provide your response in JSON: { \"rationale\": \"...\", \"score\": 1|2|3|\"N/A\" }\n"
     "This JSON must be the only thing in your response. Property names are enclosed in double quotes. No markdown permitted. "
     "No surrounding the JSON with markdown. No surrounding the JSON with ```json ```.\n\n"
     f"Original problem text: {problemText}\n"
     f"Known answer: {knownAnswer}\n"
+    f"Response type: {responseType}\n"
     f"Conversation: {json.dumps(conversation, ensure_ascii=False)}\n\n"
     "CONTEXT:\n"
     "The tutor provides 4 types of responses: start, answer, hint, skip\n"
@@ -126,8 +137,7 @@ def generateJudgePrompt(problemText: str, conversation: list[dict[str, any]], re
     "For each hint request, the tutor replies with a hint-type response. The student can request to skip the current active question and "
     "the tutor replies by generating a new question that is of the same topic as the original problem.\n"
     "For answer (student correct) and skip responses, the tutor ends their response with a JSON block containing a new question. This, "
-    "and any JSON block the tutor generates at the end of their response, is not shown to the student.\n"
-    "The type of the tutor's response will be specified.\n\n"
+    "and any JSON block the tutor generates at the end of their response, is not shown to the student.\n\n"
     "RUBRIC:\n"
   )
 
